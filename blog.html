@@ -1,0 +1,627 @@
+<!doctype html>
+<html class="no-js" lang="zxx">
+<head>
+    <script src="./js/supabase-config.js"></script>
+    <script src="./js/supabase-client.js"></script>
+    <script src="./js/karak-data.js"></script>
+    <script src="./js/shop-details.js" defer></script>
+    <script src="./js/supabase-sync.js"></script>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>KARAK STATION | Blog</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+
+    <!-- CSS here -->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/owl.carousel.min.css">
+    <link rel="stylesheet" href="css/slicknav.css">
+    <link rel="stylesheet" href="css/animate.min.css">
+    <link rel="stylesheet" href="css/magnific-popup.css">
+    <link rel="stylesheet" href="css/fontawesome-all.min.css">
+    <link rel="stylesheet" href="css/themify-icons.css">
+    <link rel="stylesheet" href="css/themify-icons.css">
+    <link rel="stylesheet" href="css/slick.css">
+    <link rel="stylesheet" href="css/nice-select.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <style>
+        /* Logo and Text Animation */
+        @keyframes logoSlideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        @keyframes textSlideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        @keyframes textBounce {
+            0%, 100% {
+                transform: translateX(0);
+            }
+            50% {
+                transform: translateX(5px);
+            }
+        }
+        
+        .logo {
+            animation: logoSlideInLeft 0.8s ease-out;
+            gap: 10px;
+            min-width: 0;
+        }
+        
+        .logo a {
+            display: flex;
+            align-items: center;
+            flex-shrink: 0;
+        }
+        
+        .logo a img {
+            animation: logoSlideInLeft 0.8s ease-out;
+            width: 52px;
+            height: 52px;
+            object-fit: contain;
+            display: block;
+        }
+        
+        .logo .brand-text {
+            animation: textSlideInRight 0.8s ease-out 0.3s both;
+            color: #ff0033;
+            font-size: clamp(18px, 2.2vw, 32px);
+            font-weight: 700;
+            line-height: 1.1;
+            letter-spacing: 0.02em;
+            white-space: nowrap;
+        }
+        
+        .logo .brand-text:hover {
+            animation: textBounce 0.6s ease-in-out;
+        }
+
+        .main-menu ul#navigation > li {
+            position: relative;
+        }
+
+        .main-menu ul#navigation > li > ul.submenu {
+            left: 50%;
+            transform: translateX(-50%);
+            min-width: 180px;
+            text-align: left;
+            padding: 10px 0;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+        }
+
+        @media (max-width: 1199px) {
+            .logo a img { width: 46px; height: 46px; }
+            .logo .brand-text { font-size: clamp(16px, 2vw, 24px); }
+        }
+
+        @media (max-width: 991px) {
+            .logo a img { width: 42px; height: 42px; }
+            .logo .brand-text { font-size: 18px; }
+            .main-menu ul#navigation > li > ul.submenu {
+                left: 0;
+                transform: none;
+            }
+        }
+
+        @media (max-width: 767px) {
+            .logo { gap: 8px; }
+            .logo a img { width: 38px; height: 38px; }
+            .logo .brand-text { font-size: 15px; letter-spacing: 0; }
+            .main-header .container-fluid { padding-left: 15px; padding-right: 15px; }
+        }
+        
+        /* Footer logo white color */
+        .footer-logo img {
+            filter: brightness(0) invert(1);
+        }
+
+        .blog_item {
+            margin-bottom: 30px;
+        }
+
+        .blog_item_img img {
+            width: 100%;
+            height: 240px;
+            object-fit: cover;
+            display: block;
+            border-radius: 12px;
+        }
+
+        .blog_details {
+            padding: 24px 0 0;
+        }
+
+        @media (max-width: 767px) {
+            .blog_item_img img {
+                height: 200px;
+            }
+            .blog_details {
+                padding: 18px 0 0;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="css/site-chrome.css">
+    <link rel="stylesheet" href="css/blog-design.css">
+</head>
+<body class="ks-blog-page">
+    <!--? Preloader Start -->
+    <div id="preloader-active">
+        <div class="preloader d-flex align-items-center justify-content-center">
+            <div class="preloader-inner position-relative">
+                <div class="preloader-circle"></div>
+                <div class="preloader-img pere-text">
+                    <img src="logo/logo.png" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+    <header>
+        <!--? Header Start -->
+        <div class="header-area header-transparent">
+                <div class="main-header  header-sticky">
+                    <div class="container-fluid">
+                        <div class="row align-items-center">
+                            <!-- Logo -->
+                            <div class="col-xl-2 col-lg-2 col-md-1">
+                                <div class="logo d-flex align-items-center">
+                                    <a href="index.html"><img src="logo/logo.png" alt=""></a>
+                                    <span class="brand-text">KARAK STATION</span>
+                                </div>
+                            </div>
+                            <div class="col-xl-10 col-lg-10 col-md-10">
+                                <div class="menu-main d-flex align-items-center justify-content-end">
+                                    <!-- Main-menu -->
+                                    <div class="main-menu f-right d-none d-lg-block">
+                                        <nav> 
+                                            <ul id="navigation">
+                                                <li><a href="index.html">Home</a></li>
+                                                <li><a href="about.html">About</a></li>
+                                                <li><a href="menu.html">Menu</a></li>
+                                                <li><a href="special-deal.html">Special Deal</a></li>
+                                                <li><a href="blog.html">Blog</a></li>
+                                                <li><a href="contact.html">Contact</a></li>
+                                            </ul>
+                                        </nav>
+                                    </div>
+                                    <div class="header-right-btn f-right d-none d-lg-block ml-20">
+                                        <a href="special-deal.html" class="border-btn header-btn">Special Deal</a>
+                                        <a href="menu.html" class="border-btn header-btn">Order Online</a>
+                                    </div>
+                                </div>
+                            </div>   
+                            <!-- Mobile Menu -->
+                            <div class="col-12">
+                                <div class="mobile_menu d-block d-lg-none"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </div>
+        <!-- Header End -->
+    </header>
+    <main>
+        <section class="ks-blog-hero" aria-labelledby="ks-blog-title">
+            <div class="ks-blog-hero-copy">
+                <p class="ks-blog-eyebrow">Stories from Karak Station</p>
+                <h1 id="ks-blog-title">Fresh from our kitchen</h1>
+                <p>Food, people, and little moments worth sharing.</p>
+            </div>
+        </section>
+        <section class="ks-blog-content" aria-labelledby="ks-blog-posts-title">
+            <div class="ks-blog-content-inner">
+                <header class="ks-blog-heading">
+                    <p class="ks-blog-eyebrow">The latest</p>
+                    <h2 id="ks-blog-posts-title">Stories &amp; updates</h2>
+                </header>
+                <nav class="ks-blog-categories" aria-label="Filter blog posts">
+                    <ul id="blog-category-list"></ul>
+                </nav>
+                <div class="blog_left_sidebar ks-blog-grid" id="blog-posts-container" aria-live="polite"></div>
+                <div id="global-comments-view" class="ks-blog-comments"></div>
+            </div>
+        </section>
+    </main>
+    <footer aria-label="Restaurant site footer with contact information">
+        <!--? Footer Start-->
+        <div class="footer-area section-bg" data-background="gallery/section_bg02.png">
+            <div class="container">
+                <div class="footer-top footer-padding">
+                    <div class="row d-flex justify-content-between">
+                        <div class="col-xl-4 col-lg-4 col-md-5 col-sm-8">
+                            <div class="single-footer-caption mb-50">
+                                <!-- logo -->
+                                <div class="footer-logo">
+                                    <a href="index.html"><img src="logo/karak_station_logo.png" alt="Karak Station logo"></a>
+                                </div>
+                                <div class="footer-contact" aria-labelledby="footer-contact-label">
+                                    <h4 id="footer-contact-label">Restaurant & Cafeteria</h4>
+                                    <p><strong>Restaurant &amp; Cafeteria / مطعم &amp; كافتيريا</strong></p>
+                                    <p>24 HOURS OPEN / مفتوح 24 ساعة</p>
+                                    <p>FREE DELIVERY / توصيل مجاني</p>
+                                    <p>Umm Al Amad, Qatar / أم العماد, قطر</p>
+                                    <p><a href="tel:+97477821400">+974 77821400</a></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-2 col-lg-2 col-md-5 col-sm-6">
+                            <div class="single-footer-caption mb-50">
+                                <div class="footer-tittle">
+                                    <h4>Navigation</h4>
+                                    <ul aria-label="Footer Navigation">
+                                        <li><a href="index.html" aria-label="Navigate to Home page">Home</a></li>
+                                        <li><a href="blog.html" aria-label="Navigate to Blog page">Events</a></li>
+                                        <li><a href="index.html#testimonial" aria-label="Navigate to Testimonial section">Testimonial</a></li>
+                                        <li><a href="menu.html" aria-label="Navigate to Menu page">Categories</a></li>
+                                        <li><a href="contact.html" aria-label="Navigate to Contact page">Contacts</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Instagram -->
+                        <div class="col-xl-4 col-lg-4 col-md-5 col-sm-7">
+                            <div class="single-footer-caption mb-50">
+                                <div class="footer-tittle">
+                                    <h4>Instagram Feed</h4>
+                                </div>
+                                <div class="instagram-gellay">
+                                    <ul class="insta-feed">
+                                        <li><a href="#"><img src="gallery/instagram1.png" alt=""></a></li>
+                                        <li><a href="#"><img src="gallery/instagram2.png" alt=""></a></li>
+                                        <li><a href="#"><img src="gallery/instagram3.png" alt=""></a></li>
+                                        <li><a href="#"><img src="gallery/instagram4.png" alt=""></a></li>
+                                        <li><a href="#"><img src="gallery/instagram5.png" alt=""></a></li>
+                                        <li><a href="#"><img src="gallery/instagram6.png" alt=""></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="footer-bottom">
+                    <div class="row d-flex justify-content-between align-items-center">
+                        <div class="col-xl-9 col-lg-8">
+                            <div class="footer-copy-right">
+                                <p><!-- Link back to Beeone Digital can't be removed. Template is licensed under CC BY 3.0. -->
+  Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | made with <i class="fa fa-heart" aria-hidden="true"></i> by Beeone Digital
+  <!-- Link back to Beeone Digital can't be removed. Template is licensed under CC BY 3.0. --></p>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-lg-4">
+                            <!-- Footer Social -->
+                            <div class="footer-social f-right">
+                                <span>Follow Us</span>
+                                <a href="https://www.facebook.com/profile.php?id=61590693355336" target="_blank" rel="noopener"><i class="fab fa-facebook-f"></i></a>
+                                <a href="https://www.instagram.com/karakstationqt/" target="_blank" rel="noopener"><i class="fab fa-instagram"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Footer End-->
+    </footer>
+    <!-- Scroll Up -->
+    <div id="back-top" >
+        <a title="Go to Top" href="#"> <i class="fas fa-level-up-alt"></i></a>
+    </div>
+
+    <!-- JS here -->
+	
+    <script src="./js/vendor/modernizr-3.5.0.min.js"></script>
+    <!-- Jquery, Popper, Bootstrap -->
+    <script src="./js/vendor/jquery-1.12.4.min.js"></script>
+    <script src="./js/popper.min.js"></script>
+    <script src="./js/bootstrap.min.js"></script>
+    <!-- Jquery Mobile Menu -->
+    <script src="./js/jquery.slicknav.min.js"></script>
+
+    <!-- Jquery Slick , Owl-Carousel Plugins -->
+    <script src="./js/owl.carousel.min.js"></script>
+    <script src="./js/slick.min.js"></script>
+    <!-- One Page, Animated-HeadLin -->
+    <script src="./js/wow.min.js"></script>
+    <script src="./js/animated.headline.js"></script>
+    
+    <!-- Nice-select, sticky -->
+    <script src="./js/jquery.nice-select.min.js"></script>
+    <script src="./js/jquery.sticky.js"></script>
+    <script src="./js/jquery.magnific-popup.js"></script>
+
+    <!-- contact js -->
+    <script src="./js/contact.js"></script>
+    <script src="./js/jquery.form.js"></script>
+    <script src="./js/jquery.validate.min.js"></script>
+    <script src="./js/mail-script.js"></script>
+    <script src="./js/jquery.ajaxchimp.min.js"></script>
+    
+    <!-- Jquery Plugins, main Jquery -->	
+    <script src="./js/plugins.js"></script>
+    <script src="./js/site-chrome.js"></script>
+    <script src="./js/main.js"></script>
+    <script src="./js/site-settings.js"></script>
+    <script src="./js/supabase-config.js"></script>
+    <script src="./js/supabase-client.js"></script>
+    <script src="./js/karak-data.js"></script>
+    
+    <script>
+        // Initialize WOW.js for scroll animations
+        new WOW().init();
+
+        const blogVisitorKey = 'karakBlogVisitorId';
+        let blogVisitorId = localStorage.getItem(blogVisitorKey);
+        if (!/^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(blogVisitorId || '')) {
+            blogVisitorId = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, character => {
+                const random = Math.random() * 16 | 0;
+                return (character === 'x' ? random : (random & 3 | 8)).toString(16);
+            });
+            localStorage.setItem(blogVisitorKey, blogVisitorId);
+        }
+        const blogPostsContainer = document.getElementById('blog-posts-container');
+        const blogSidebarCategories = document.getElementById('blog-category-list');
+        const blogSidebarRecent = document.getElementById('blog-recent-posts');
+
+        let cachedBlogData = { categories: [], posts: [] };
+        let selectedBlogCategory = 'All';
+        let blogLoadError = false;
+        function getStoredBlogData() { return cachedBlogData; }
+        async function loadBlogFromSupabase() {
+            try {
+                const data = await window.KarakDB.getBlog();
+                cachedBlogData = { categories: data.categories || [], posts: (data.posts || []).map(normalizePostData) };
+                blogLoadError = false;
+                refreshBlogPage();
+            } catch (error) {
+                console.error('Could not load public blog from Supabase:', error);
+                blogLoadError = true;
+                refreshBlogPage();
+            }
+        }
+
+        function createCategoryItem(category, count, selected) {
+            return `
+                <li>
+                    <button type="button" class="ks-blog-category${selected ? ' active' : ''}" data-category="${escapeBlogHtml(category)}" aria-pressed="${selected}">
+                        <span>${escapeBlogHtml(category)}</span><span class="ks-blog-category-count">${count}</span>
+                    </button>
+                </li>`;
+        }
+
+        function createRecentPostItem(post) {
+            return `
+                <div class="media post_item">
+                    <img src="${post.image || 'post/post_1.png'}" alt="post">
+                    <div class="media-body">
+                        <a href="${post.link || 'blog_details.html'}">
+                            <h3 style="color: #2d2d2d;">${escapeBlogHtml(post.title)}</h3>
+                        </a>
+                        <p>${escapeBlogHtml(post.date || 'Unknown date')}</p>
+                    </div>
+                </div>`;
+        }
+
+        function createBlogPostCard(post) {
+            const date = new Date(post.date || Date.now());
+            const dateLabel = Number.isNaN(date.getTime()) ? '' : date.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+            const likes = Number(post.likes || 0);
+            const comments = Number(post.comments || post.commentList.length || 0);
+            return `
+                <article class="blog_item ks-blog-card" data-post-id="${post.id}">
+                    <img class="ks-blog-card-image" src="${escapeBlogHtml(post.image || 'gallery/blog1.png')}" alt="${escapeBlogHtml(post.title)}" loading="lazy" onerror="this.onerror=null;this.src='gallery/blog1.png'">
+                    <div class="ks-blog-card-content">
+                        <div class="ks-blog-card-meta"><span>${escapeBlogHtml(post.category || 'Karak Station')}</span>${dateLabel ? `<time datetime="${escapeBlogHtml(post.date || '')}">${dateLabel}</time>` : ''}</div>
+                        <h3>${escapeBlogHtml(post.title)}</h3>
+                        <p class="ks-blog-excerpt">${escapeBlogHtml(post.excerpt || 'A fresh update from Karak Station.')}</p>
+                        <div class="ks-blog-card-actions">
+                            <button type="button" class="ks-blog-text-action blog-comments-link" data-post-id="${escapeBlogHtml(post.id)}"><i class="fas fa-comment-dots" aria-hidden="true"></i> ${comments} Comments</button>
+                            <button type="button" class="ks-blog-text-action" data-action="like" data-post-id="${escapeBlogHtml(post.id)}"><i class="fas fa-heart" aria-hidden="true"></i> ${likes} Like${likes === 1 ? '' : 's'}</button>
+                        </div>
+                    </div>
+                </article>`;
+        }
+
+        function escapeBlogHtml(value) {
+            return String(value == null ? '' : value).replace(/[&<>"']/g, character => ({
+                '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+            })[character]);
+        }
+
+        function normalizePostData(post) {
+            return {
+                likes: Number(post.likes || 0),
+                commentList: Array.isArray(post.commentList) ? post.commentList : [],
+                comments: post.comments || 0,
+                ...post
+            };
+        }
+
+        function getEngagedPost(post) {
+            return post;
+        }
+
+        function getPostTimestamp(post) {
+            const timestamp = Date.parse(post.date || '');
+            return Number.isFinite(timestamp) ? timestamp : 0;
+        }
+
+        function refreshBlogPage() {
+            const { categories, posts } = getStoredBlogData();
+            const normalizedPosts = posts.map(post => getEngagedPost(normalizePostData(post)));
+            const displayedPosts = selectedBlogCategory === 'All'
+                ? normalizedPosts
+                : normalizedPosts.filter(post => post.category === selectedBlogCategory);
+            if (blogPostsContainer) {
+                blogPostsContainer.innerHTML = '';
+                if (blogLoadError) {
+                    blogPostsContainer.innerHTML = '<p class="ks-blog-empty">Blog posts could not be loaded right now. Please try again later.</p>';
+                } else if (displayedPosts.length === 0) {
+                    blogPostsContainer.innerHTML = `<p class="ks-blog-empty">${selectedBlogCategory === 'All' ? 'No blog posts are available right now.' : 'No posts in this category yet.'}</p>`;
+                } else {
+                    const newestFirst = displayedPosts.slice().sort((a, b) => getPostTimestamp(b) - getPostTimestamp(a));
+                    blogPostsContainer.innerHTML = newestFirst.map(createBlogPostCard).join('');
+                }
+            }
+            if (blogSidebarCategories) {
+                const categoryCounts = categories.map(category => ({
+                    category,
+                    count: normalizedPosts.filter(post => post.category === category).length
+                }));
+                blogSidebarCategories.innerHTML = [
+                    createCategoryItem('All', normalizedPosts.length, selectedBlogCategory === 'All'),
+                    ...categoryCounts.map(({ category, count }) => createCategoryItem(category, count, selectedBlogCategory === category))
+                ].join('');
+            }
+            if (blogSidebarRecent) {
+                if (normalizedPosts.length === 0) {
+                    blogSidebarRecent.innerHTML = '<p class="text-muted">No recent posts available.</p>';
+                } else {
+                    const sortedRecent = normalizedPosts.slice().sort((a, b) => getPostTimestamp(b) - getPostTimestamp(a)).slice(0, 4);
+                    blogSidebarRecent.innerHTML = sortedRecent.map(createRecentPostItem).join('');
+                }
+            }
+        }
+
+        async function updatePostLikes(postId, button) {
+            if (!getStoredBlogData().posts.some(item => item.id === postId)) return;
+            if (button) button.disabled = true;
+            try {
+                await window.KarakDB.likeBlogPost(postId, blogVisitorId);
+                await loadBlogFromSupabase();
+            } catch (error) {
+                console.error('Could not save blog like to Supabase:', error);
+                alert('Your like could not be saved. Please try again.');
+            } finally {
+                if (button) button.disabled = false;
+            }
+        }
+
+        async function addCommentToPost(postId, commenterName, commentText) {
+            if (!getStoredBlogData().posts.some(item => item.id === postId)) return;
+            await window.KarakDB.addBlogComment(postId, commenterName, commentText);
+            await loadBlogFromSupabase();
+        }
+
+        function renderGlobalCommentsForPost(postId) {
+            const container = document.getElementById('global-comments-view');
+            if (!container) return;
+            const { posts } = getStoredBlogData();
+            const storedPost = posts.find(p => p.id === postId);
+            const post = storedPost ? getEngagedPost(storedPost) : null;
+            if (!post) {
+                container.innerHTML = '<p class="text-muted">Comments not found for this post.</p>';
+                return;
+            }
+            const comments = Array.isArray(post.commentList) ? post.commentList.slice().sort((a,b)=>new Date(b.date)-new Date(a.date)) : [];
+            const html = [];
+            html.push(`<div class="blog-comments-card"><h3>${escapeBlogHtml(post.title)}</h3><p class="text-muted">${comments.length} comment(s)</p>`);
+            // Add comment form similar to the per-post form (matches site styling)
+            html.push(`
+                <form id="global-comment-form" data-post-id="${escapeBlogHtml(post.id)}" class="mb-4">
+                    <div class="form-group mb-3">
+                        <input type="text" name="commenterName" class="form-control" placeholder="Your name">
+                    </div>
+                    <div class="form-group mb-3">
+                        <textarea name="commentText" class="form-control" rows="4" placeholder="Write a comment"></textarea>
+                    </div>
+                    <button type="submit" class="button rounded-0 primary-bg text-white w-100 btn_1 boxed-btn">POST COMMENT</button>
+                </form>
+            `);
+            if (comments.length === 0) {
+                html.push('<p class="text-muted">No comments yet. Be the first to comment.</p>');
+            } else {
+                comments.forEach(c => {
+                    const commentDate = new Date(c.date);
+                    const dateLabel = Number.isNaN(commentDate.getTime()) ? '' : commentDate.toLocaleString();
+                    html.push(`<div class="mb-3"><strong>${escapeBlogHtml(c.name)}</strong><div class="text-muted" style="font-size:0.9rem">${escapeBlogHtml(dateLabel)}</div><p>${escapeBlogHtml(c.text)}</p></div>`);
+                });
+            }
+            html.push('<div class="mt-3"><button class="button boxed-btn" id="close-comments-view">Close</button></div>');
+            container.innerHTML = html.join('');
+            container.scrollIntoView({ behavior: 'smooth' });
+            const closeBtn = document.getElementById('close-comments-view');
+            if (closeBtn) closeBtn.addEventListener('click', () => { container.innerHTML = ''; });
+        }
+
+        document.addEventListener('click', function (e) {
+            const a = e.target.closest('.blog-comments-link');
+            if (!a) return;
+            e.preventDefault();
+            const postId = a.dataset.postId;
+            if (postId) renderGlobalCommentsForPost(postId);
+        });
+
+        // Handle submit from the global comments form (delegated)
+        document.addEventListener('submit', async function (e) {
+            const form = e.target.closest('#global-comment-form');
+            if (!form) return;
+            e.preventDefault();
+            const postId = form.dataset.postId;
+            const nameInput = form.querySelector('[name="commenterName"]');
+            const textInput = form.querySelector('[name="commentText"]');
+            const name = nameInput ? nameInput.value.trim() : '';
+            const text = textInput ? textInput.value.trim() : '';
+            if (!postId || !name || !text || name.length > 100 || text.length > 2000) return;
+            try {
+                await addCommentToPost(postId, name, text);
+            } catch (error) {
+                console.error('Could not save blog comment to Supabase:', error);
+                alert('Your comment could not be saved. Please try again.');
+                return;
+            }
+            // Clear inputs and re-open comments view for the same post
+            if (nameInput) nameInput.value = '';
+            if (textInput) textInput.value = '';
+            renderGlobalCommentsForPost(postId);
+        });
+
+        blogSidebarCategories.addEventListener('click', event => {
+            const button = event.target.closest('[data-category]');
+            if (!button) return;
+            selectedBlogCategory = button.dataset.category;
+            refreshBlogPage();
+        });
+
+        blogPostsContainer.addEventListener('click', event => {
+            const button = event.target.closest('[data-action="like"]');
+            if (!button) return;
+            const postId = button.dataset.postId;
+            if (postId) {
+                updatePostLikes(postId, button);
+            }
+        });
+
+        // Per-post comment forms removed; comments are posted via the global comments view.
+
+        window.addEventListener('storage', refreshBlogPage);
+        window.addEventListener('focus', loadBlogFromSupabase);
+        document.addEventListener('visibilitychange', () => {
+            if (!document.hidden) {
+                loadBlogFromSupabase();
+            }
+        });
+
+        refreshBlogPage();
+        loadBlogFromSupabase();
+    </script>
+    <script src="./js/water-animation.js"></script>
+    
+    </body>
+</html>

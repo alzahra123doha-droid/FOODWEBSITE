@@ -1,0 +1,1326 @@
+<!doctype html>
+<html class="no-js" lang="zxx">
+<head>
+    <script src="./js/supabase-config.js"></script>
+    <script src="./js/supabase-client.js"></script>
+    <script src="./js/karak-data.js"></script>
+    <script src="./js/shop-details.js" defer></script>
+    <script src="./js/supabase-sync.js"></script>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>KARAK STATION | Home</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="manifest" href="site.webmanifest">
+    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+
+	<!-- CSS here -->
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/owl.carousel.min.css">
+	<link rel="stylesheet" href="css/slicknav.css">
+    <link rel="stylesheet" href="css/flaticon.css">
+    <link rel="stylesheet" href="css/gijgo.css">
+	<link rel="stylesheet" href="css/animate.min.css">
+	<link rel="stylesheet" href="css/magnific-popup.css">
+	<link rel="stylesheet" href="css/fontawesome-all.min.css">
+	<link rel="stylesheet" href="css/themify-icons.css">
+	<link rel="stylesheet" href="css/slick.css">
+	<link rel="stylesheet" href="css/nice-select.css">
+	<link rel="stylesheet" href="css/style.css">
+	<style>
+		.special-foods-carousel {
+			padding: 30px 0;
+			background: #f9f9f9;
+		}
+		.special-carousel {
+			padding: 20px;
+		}
+		.special-food-item {
+			background: #fff;
+			border-radius: 12px;
+			overflow: hidden;
+			box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+			transition: all 0.3s ease;
+			margin: 15px;
+		}
+		.special-food-item:hover {
+			transform: translateY(-5px);
+			box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+		}
+		.food-image {
+			width: 100%;
+			height: 600px;
+			background-size: cover;
+			background-position: center;
+		}
+		.food-info {
+			padding: 20px;
+			text-align: center;
+		}
+		.food-info h4 {
+			margin: 10px 0;
+			font-size: 18px;
+			font-weight: bold;
+			color: #2b2b2b;
+		}
+		.food-info p {
+			color: #6d6d6d;
+			font-size: 14px;
+			margin: 10px 0;
+		}
+		.order-btn {
+			background: #6f0820;
+			color: #fff;
+			border: none;
+			padding: 10px 25px;
+			border-radius: 6px;
+			cursor: pointer;
+			font-weight: bold;
+			transition: all 0.3s ease;
+		}
+		.order-btn:hover {
+			background: #4f0327;
+			transform: scale(1.05);
+		}
+		.owl-carousel .owl-nav {
+			position: absolute;
+			top: 50%;
+			width: 100%;
+			display: flex;
+			justify-content: space-between;
+			transform: translateY(-50%);
+			padding: 0 20px;
+			z-index: 10;
+		}
+		.owl-carousel .owl-nav button {
+			background: rgba(255, 86, 0, 0.8) !important;
+			color: #fff !important;
+			border: none;
+			width: 50px;
+			height: 50px;
+			border-radius: 50%;
+			font-size: 20px;
+			cursor: pointer;
+			transition: all 0.3s ease;
+		}
+		.owl-carousel .owl-nav button:hover {
+			background: #ff5600 !important;
+		}
+		
+		/* Logo and Text Animation */
+		@keyframes logoSlideInLeft {
+			from {
+				opacity: 0;
+				transform: translateX(-50px);
+			}
+			to {
+				opacity: 1;
+				transform: translateX(0);
+			}
+		}
+		
+		@keyframes textSlideInRight {
+			from {
+				opacity: 0;
+				transform: translateX(50px);
+			}
+			to {
+				opacity: 1;
+				transform: translateX(0);
+			}
+		}
+		
+		@keyframes textBounce {
+			0%, 100% {
+				transform: translateX(0);
+			}
+			50% {
+				transform: translateX(5px);
+			}
+		}
+		
+		.logo {
+			animation: logoSlideInLeft 0.8s ease-out;
+			gap: 10px;
+			min-width: 0;
+		}
+		
+		.logo a {
+			display: flex;
+			align-items: center;
+			flex-shrink: 0;
+		}
+		
+		.logo a img {
+			animation: logoSlideInLeft 0.8s ease-out;
+			width: 52px;
+			height: 52px;
+			object-fit: contain;
+			display: block;
+		}
+		
+		.logo .brand-text {
+			animation: textSlideInRight 0.8s ease-out 0.3s both;
+			color: #ff0033;
+			font-size: clamp(18px, 2.2vw, 32px);
+			font-weight: 700;
+			line-height: 1.1;
+			letter-spacing: 0.02em;
+			white-space: nowrap;
+		}
+		
+		.logo .brand-text:hover {
+			animation: textBounce 0.6s ease-in-out;
+		}
+
+		.main-menu ul#navigation > li {
+			position: relative;
+		}
+
+		.main-menu ul#navigation > li > ul.submenu {
+			left: 50%;
+			transform: translateX(-50%);
+			min-width: 180px;
+			text-align: left;
+			padding: 10px 0;
+			border-radius: 10px;
+			box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+		}
+
+		@media (max-width: 1199px) {
+			.logo a img { width: 46px; height: 46px; }
+			.logo .brand-text { font-size: clamp(16px, 2vw, 24px); }
+		}
+
+		@media (max-width: 991px) {
+			.logo a img { width: 42px; height: 42px; }
+			.logo .brand-text { font-size: 18px; }
+			.main-menu ul#navigation > li > ul.submenu {
+				left: 0;
+				transform: none;
+			}
+		}
+
+		@media (max-width: 767px) {
+			.logo { gap: 8px; }
+			.logo a img { width: 38px; height: 38px; }
+			.logo .brand-text { font-size: 15px; letter-spacing: 0; }
+			.main-header .container-fluid { padding-left: 15px; padding-right: 15px; }
+		}
+		
+		/* Footer logo white color */
+		.footer-logo img {
+			filter: brightness(0) invert(1);
+		}
+
+		.blogs-area .single-blogs {
+			margin-bottom: 40px;
+		}
+
+		.blogs-area .single-blogs .blog-img img {
+			width: 100%;
+			height: 220px;
+			object-fit: cover;
+			display: block;
+			border-radius: 12px;
+		}
+
+		@media (max-width: 767px) {
+			.blogs-area .single-blogs {
+				margin-bottom: 24px;
+			}
+			.blogs-area .single-blogs .blog-img img {
+				height: 200px;
+			}
+			.blogs-area .single-blogs .blog-cap {
+				position: static;
+				width: 100%;
+				bottom: auto;
+				right: auto;
+				border-radius: 0 0 12px 12px;
+				padding: 20px;
+				margin-top: 0;
+			}
+		}
+		
+		/* Hero caption text white */
+		.hero__caption h1,
+		.hero__caption p,
+		.hero__caption span {
+			color: #ffffff !important;
+		}
+
+		/* Water Bubble Animation */
+		#water-bubble-container {
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			pointer-events: none;
+			z-index: 1000;
+		}
+
+		.water-bubble {
+			position: fixed;
+			pointer-events: none;
+			border-radius: 50%;
+			background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.8), rgba(100, 200, 255, 0.4));
+			box-shadow: inset -2px -2px 5px rgba(255, 255, 255, 0.5), inset 2px 2px 5px rgba(0, 0, 0, 0.2);
+			animation: bubble-float 2s ease-in forwards;
+		}
+
+		@keyframes bubble-float {
+			0% {
+				opacity: 1;
+				transform: translateY(0) scale(1);
+			}
+			50% {
+				opacity: 0.8;
+			}
+			100% {
+				opacity: 0;
+				transform: translateY(-80px) scale(0.5);
+			}
+		}
+	</style>
+	    <link rel="stylesheet" href="css/homepage-design.css">
+        <link rel="stylesheet" href="css/site-chrome.css">
+	</head>
+	<body class="home-page">
+    <!--? Preloader Start -->
+    <div id="preloader-active">
+        <div class="preloader d-flex align-items-center justify-content-center">
+            <div class="preloader-inner position-relative">
+                <div class="preloader-circle"></div>
+                <div class="preloader-img pere-text">
+                    <img src="logo/logo.png" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Preloader Start -->
+    <header id="top">
+        <!--? Header Start -->
+        <div class="header-area header-transparent">
+                <div class="main-header  header-sticky">
+                    <div class="container-fluid">
+                        <div class="row align-items-center">
+                            <!-- Logo -->
+                            <div class="col-xl-2 col-lg-2 col-md-1">
+                                <div class="logo d-flex align-items-center">
+                                    <a class="ks-brand-icon" href="index.html" aria-label="Karak Station home"><i class="fas fa-coffee" aria-hidden="true"></i></a>
+                                    <span class="brand-text">KARAK STATION</span>
+                                </div>
+                            </div>
+                            <div class="col-xl-10 col-lg-10 col-md-10">
+                                <div class="menu-main d-flex align-items-center justify-content-end">
+                                    <!-- Main-menu -->
+                                    <div class="main-menu f-right d-none d-lg-block">
+                                        <nav> 
+                                            <ul id="navigation">
+                                                <li><a href="#top">Home</a></li>
+                                                <li><a href="about.html">About</a></li>
+                                                <li><a href="menu.html">Menu</a></li>
+                                                <li class="ks-pages-menu">
+                                                    <a href="special-deal.html">Pages <i class="fas fa-chevron-down" aria-hidden="true"></i></a>
+                                                    <ul class="submenu">
+                                                        <li><a href="special-deal.html">Today’s Special</a></li>
+                                                        <li><a href="#book-table">Book a Table</a></li>
+                                                    </ul>
+                                                </li>
+                                                <li><a href="blog.html">Blog</a></li>
+                                                <li><a href="contact.html">Contact</a></li>
+                                            </ul>
+                                        </nav>
+                                    </div>
+                                </div>
+                            </div>   
+                            <!-- Mobile Menu -->
+                            <div class="col-12">
+                                <div class="mobile_menu d-block d-lg-none"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </div>
+        <!-- Header End -->
+    </header>
+    <main>
+        <div class="ks-home">
+            <section class="ks-hero" aria-labelledby="ks-hero-title">
+                <div class="ks-lights" aria-hidden="true">
+                    <span class="ks-pendant"></span>
+                    <span class="ks-pendant"></span>
+                    <span class="ks-pendant"></span>
+                </div>
+                <div class="ks-hero-copy">
+                    <p class="ks-eyebrow">A warm welcome from our team</p>
+                    <h1 id="ks-hero-title">A little comfort<br>in every cup.</h1>
+                    <p class="ks-hero-description">Fresh Karak, delicious bites, and the kind of hospitality that feels like home.</p>
+                    <a class="ks-button" href="menu.html">Explore our menu</a>
+                </div>
+                <div class="ks-counter-scene" aria-hidden="true">
+                    <div class="ks-counter-items">
+                        <span class="ks-cup-stack"></span>
+                        <span class="ks-coffee-tin"></span>
+                        <span class="ks-machine"><i></i></span>
+                    </div>
+                    <div class="ks-counter-top"></div>
+                    <div class="ks-counter-front"><span>KARAK STATION</span></div>
+                    <div class="ks-stool ks-stool-left"><i></i></div>
+                    <div class="ks-stool ks-stool-middle"><i></i></div>
+                    <div class="ks-stool ks-stool-right"><i></i></div>
+                </div>
+                <a class="ks-scroll-cue" href="#welcome" aria-label="Scroll to welcome section"><span></span></a>
+            </section>
+
+            <section class="ks-benefits" aria-label="Karak Station service highlights">
+                <article class="ks-benefit">
+                    <span class="ks-benefit-icon" aria-hidden="true"><i class="fas fa-truck"></i></span>
+                    <div>
+                        <h2>Fast Delivery</h2>
+                        <p>Fresh favorites delivered hot to your door.</p>
+                    </div>
+                </article>
+                <article class="ks-benefit">
+                    <span class="ks-benefit-icon" aria-hidden="true"><i class="fas fa-leaf"></i></span>
+                    <div>
+                        <h2>Fresh Food</h2>
+                        <p>Made fresh with care and quality ingredients.</p>
+                    </div>
+                </article>
+                <article class="ks-benefit">
+                    <span class="ks-benefit-icon" aria-hidden="true"><i class="fas fa-gift"></i></span>
+                    <div>
+                        <h2>Free Delivery</h2>
+                        <p>Enjoy free delivery on your order within 5 km.</p>
+                    </div>
+                </article>
+            </section>
+
+            <section class="ks-section ks-welcome" id="welcome">
+                <div class="ks-content ks-welcome-grid">
+                    <div>
+                        <p class="ks-script">The best Karak for you</p>
+                        <h2>A familiar taste<br>made with care.</h2>
+                        <p class="ks-copy">At Karak Station, every cup is brewed fresh and every meal is made to bring people together. Drop by for a quick pick-me-up or stay awhile and make yourself at home.</p>
+                        <a class="ks-button ks-button-dark" href="about.html">Discover our story</a>
+                    </div>
+                    <div class="ks-welcome-image">
+                        <img src="gallery/about.png" alt="A freshly prepared dish from the Karak Station kitchen">
+                        <span class="ks-image-stamp">Made fresh<br>with care</span>
+                    </div>
+                </div>
+            </section>
+
+            <section class="ks-section ks-popular" id="popular-items">
+                <div class="ks-content">
+                    <div class="ks-section-heading">
+                        <p class="ks-script">A little something for everyone</p>
+                        <h2>Popular items</h2>
+                        <span class="ks-heading-rule"></span>
+                    </div>
+                    <div class="ks-popular-grid">
+                        <article class="ks-menu-card">
+                            <a href="menu.html" class="ks-menu-card-image"><img src="https://nishkitchen.com/wp-content/uploads/2025/01/Karak-chai-1.jpg" alt="A freshly brewed cup of Karak tea"></a>
+                            <div class="ks-menu-card-copy"><h3>Karak &amp; tea</h3><p>Slow-brewed, full of flavour, and always served hot.</p><a href="menu.html">Order now <span aria-hidden="true">→</span></a></div>
+                        </article>
+                        <article class="ks-menu-card">
+                            <a href="menu.html" class="ks-menu-card-image"><img src="https://www.cubesnjuliennes.com/wp-content/uploads/2020/06/Mutton-Biryani-Recipe.jpg" alt="A plate of fragrant biryani from the menu"></a>
+                            <div class="ks-menu-card-copy"><h3>Comfort plates</h3><p>Generous portions and satisfying favourites for any time.</p><a href="menu.html">Order now <span aria-hidden="true">→</span></a></div>
+                        </article>
+                        <article class="ks-menu-card">
+                            <a href="menu.html" class="ks-menu-card-image"><img src="https://images.hattafoodhub.com/insecure/fit/1000/1000/ce/0/plain/https://hatta-foodhub-assests.s3.me-central-1.amazonaws.com/be22d8/prods/oPKncNRv5PjIeHgJm5iQUdqLSH2pHvp9aedi8z27.jpg@webp" alt="A serving of dynamite fries from the menu"></a>
+                            <div class="ks-menu-card-copy"><h3>Fresh bites</h3><p>Made to order with fresh ingredients and plenty of care.</p><a href="menu.html">Order now <span aria-hidden="true">→</span></a></div>
+                        </article>
+                    </div>
+                </div>
+            </section>
+
+            <section class="ks-section ks-special" id="today-special">
+                <div class="ks-content ks-special-hero">
+                    <div class="ks-special-copy">
+                        <p class="ks-script">Something delicious is waiting</p>
+                        <h2>Your favorite food<br>delivered <span>hot &amp; delicious.</span></h2>
+                        <p class="ks-copy">From fresh burgers to Karak favorites, find something delicious on today’s menu.</p>
+                        <div class="ks-special-actions">
+                            <a class="ks-special-cta" href="special-deal.html">See today’s special <span aria-hidden="true">→</span></a>
+                            <a class="ks-special-menu-link" href="menu.html"><span class="ks-play-icon" aria-hidden="true">▶</span> Browse the menu</a>
+                        </div>
+                    </div>
+                    <div class="ks-special-art">
+                        <span class="ks-art-ring ks-art-ring-one" aria-hidden="true"></span>
+                        <span class="ks-art-ring ks-art-ring-two" aria-hidden="true"></span>
+                        <span class="ks-art-spark ks-art-spark-one" aria-hidden="true"></span>
+                        <span class="ks-art-spark ks-art-spark-two" aria-hidden="true"></span>
+                        <img src="https://images.deliveryhero.io/image/talabat/MenuItems/Ruman_Beef_Burger638318668760104912.jpg" alt="Ruman fresh burger from the Karak Station menu">
+                        <span class="ks-fresh-badge">Freshly<br>made</span>
+                    </div>
+                </div>
+            </section>
+
+            <section class="ks-section ks-booking" id="book-table" aria-labelledby="ks-booking-title">
+                <div class="ks-content ks-booking-layout">
+                    <div class="ks-booking-intro">
+                        <p class="ks-script">We’ll save you a seat</p>
+                        <h2 id="ks-booking-title">Come on in.<br><span class="ks-opening-hours">Open 24 hours</span></h2>
+                        <p class="ks-copy">Planning a visit with friends or family? Tell us when you’re coming and we’ll confirm your table on WhatsApp.</p>
+                        <p class="ks-booking-note"><span aria-hidden="true">✦</span> Fresh Karak and a warm welcome during our opening hours.</p>
+                    </div>
+                    <form class="ks-booking-form" aria-label="Table reservation details" onsubmit="return false;">
+                        <h3>Book your table</h3>
+                        <label for="select1">Number of guests</label>
+                        <select name="guests" id="select1" required>
+                            <option value="">Select number of guests</option>
+                            <option value="1 Person">1 Person</option>
+                            <option value="2 Persons">2 Persons</option>
+                            <option value="3 Persons">3 Persons</option>
+                            <option value="4 Persons">4 Persons</option>
+                            <option value="5 Persons">5 Persons</option>
+                            <option value="6 Persons">6 Persons</option>
+                            <option value="7 Persons">7 Persons</option>
+                            <option value="8 Persons">8 Persons</option>
+                            <option value="9 Persons">9 Persons</option>
+                            <option value="10 Persons">10 Persons</option>
+                            <option value="More than 10">More than 10</option>
+                        </select>
+                        <div class="ks-booking-fields">
+                            <div>
+                                <label for="datepicker1">Date</label>
+                                <input id="datepicker1" type="text" placeholder="Choose a date" autocomplete="off" required>
+                            </div>
+                            <div>
+                                <label for="timepicker">Time</label>
+                                <input id="timepicker" type="text" placeholder="Choose a time" autocomplete="off" required>
+                            </div>
+                        </div>
+                        <button class="ks-button ks-booking-submit" type="button" onclick="bookTableViaWhatsApp()">Request a table <span aria-hidden="true">→</span></button>
+                        <p class="ks-booking-footnote">Your reservation request will open in WhatsApp for confirmation.</p>
+                    </form>
+                </div>
+            </section>
+
+            <section class="ks-section ks-daily-menu" id="daily-menu">
+                <div class="ks-content ks-daily-grid">
+                    <div class="ks-chalkboard" aria-label="Karak Station daily menu board">
+                        <span class="ks-board-heading">Today at<br><span class="ks-board-shop-name">Karak Station</span></span>
+                        <span>Fresh Karak</span>
+                        <span>Hot coffee</span>
+                        <span>Good food</span>
+                        <span class="ks-board-flourish">Brewed with care</span>
+                    </div>
+                    <div class="ks-daily-copy">
+                        <p class="ks-script">Made fresh throughout the day</p>
+                        <h2>Your daily<br>favourites.</h2>
+                        <p class="ks-copy">From a cup of Karak to a meal worth slowing down for, there’s something ready for you. Opening hours: <span class="ks-opening-hours">Open 24 hours</span>.</p>
+                        <ul class="ks-menu-list">
+                            <li><span>Freshly brewed Karak</span><span>All day</span></li>
+                            <li><span>Coffee &amp; cold drinks</span><span>All day</span></li>
+                            <li><span>Meals &amp; fresh bites</span><span>Made to order</span></li>
+                        </ul>
+                        <a class="ks-button ks-button-dark" href="menu.html">Browse the menu</a>
+                    </div>
+                </div>
+            </section>
+
+            <section class="ks-section ks-updates" id="home-updates" hidden>
+                <div class="ks-content">
+                    <div class="ks-section-heading">
+                        <p class="ks-script">From our kitchen</p>
+                        <h2>News &amp; updates</h2>
+                        <span class="ks-heading-rule"></span>
+                    </div>
+                    <div class="row" id="home-recent-posts"></div>
+                </div>
+            </section>
+            <script>
+                document.addEventListener('DOMContentLoaded', async function() {
+                    const section = document.getElementById('home-updates');
+                    const container = document.getElementById('home-recent-posts');
+                    if (!section || !container || !window.KarakDB) return;
+                    try {
+                        const data = await window.KarakDB.getBlog();
+                        const posts = (data.posts || []).slice().sort((a, b) => new Date(b.date) - new Date(a.date)).slice(0, 3);
+                        if (!posts.length) return;
+                        const fallbackImages = ['gallery/blog1.png', 'gallery/blog2.png', 'gallery/blog3.png'];
+                        posts.forEach((post, index) => {
+                            const date = new Date(post.date || Date.now());
+                            const formattedDate = Number.isNaN(date.getTime())
+                                ? ''
+                                : date.toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' });
+                            const column = document.createElement('div');
+                            const article = document.createElement('article');
+                            const imageWrap = document.createElement('div');
+                            const image = document.createElement('img');
+                            const caption = document.createElement('div');
+                            const category = document.createElement('span');
+                            const title = document.createElement('h3');
+                            const excerpt = document.createElement('p');
+                            const dateLabel = document.createElement('time');
+                            column.className = 'ks-home-post-card-wrap';
+                            article.className = 'ks-home-post-card';
+                            imageWrap.className = 'ks-home-post-image';
+                            image.src = post.imageUrl || post.image || fallbackImages[index % fallbackImages.length];
+                            image.alt = String(post.title || 'Karak Station news');
+                            image.loading = 'lazy';
+                            image.onerror = () => {
+                                image.onerror = null;
+                                image.src = fallbackImages[index % fallbackImages.length];
+                            };
+                            caption.className = 'ks-home-post-caption';
+                            category.className = 'ks-home-post-category';
+                            category.textContent = post.category || 'Karak Station';
+                            dateLabel.className = 'ks-home-post-date';
+                            dateLabel.textContent = formattedDate;
+                            if (post.date) dateLabel.dateTime = post.date;
+                            title.textContent = post.title || 'Untitled';
+                            excerpt.textContent = post.excerpt || 'A fresh update from Karak Station.';
+                            imageWrap.appendChild(image);
+                            caption.append(category, dateLabel, title, excerpt);
+                            article.append(imageWrap, caption);
+                            column.appendChild(article);
+                            container.appendChild(column);
+                        });
+                        section.hidden = false;
+                    } catch (error) {
+                        console.error('Home blog load failed', error);
+                    }
+                });
+            </script>
+        </div>
+        <template class="legacy-homepage">
+        <!--? slider Area Start-->
+        <div class="slider-area ">
+            <div class="slider-active">
+                <!-- Single Slider -->
+                <div class="single-slider slider-height d-flex align-items-center">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-xl-9 col-lg-9 col-md-9">
+                                <div class="hero__caption">
+                                    <span data-animation="fadeInLeft" data-delay=".2s">Discover Your Taste</span>
+                                    <h1 data-animation="fadeInLeft" data-delay=".4s">Crafted with Passion, Served with Love.</h1>
+                                    <p data-animation="fadeInLeft" data-delay=".6s">Experience delicious food, refreshing drinks, and unforgettable moments—all served with genuine hospitality.</p>
+                                    <!-- Hero-btn -->
+                                    <div class="hero__btn">
+                                        <a href="menu.html" class="btn hero-btn"  data-animation="fadeInLeft" data-delay=".8s">Explore Menu</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Single Slider -->
+                <div class="single-slider slider-height d-flex align-items-center">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-xl-9 col-lg-9 col-md-9">
+                                <div class="hero__caption">
+                                    <span data-animation="fadeInLeft" data-delay=".2s">Discover Your Taste</span>
+                                    <h1 data-animation="fadeInLeft" data-delay=".4s">Crafted with Passion, Served with Love.</h1>
+                                    <p data-animation="fadeInLeft" data-delay=".6s">Experience delicious food, refreshing drinks, and unforgettable moments—all served with genuine hospitality.</p>
+                                    <!-- Hero-btn -->
+                                    <div class="hero__btn">
+                                        <a href="industries.html" class="btn hero-btn"  data-animation="fadeInLeft" data-delay=".8s">Explore Menu</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- slider Area End-->
+        <!--? About Area Start -->
+        <div class="about-low-area section-padding30">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-lg-6 col-md-12">
+                        <div class="about-caption mb-50">
+                            <!-- Section Tittle -->
+                            <div class="section-tittle mb-35 wow fadeInUp" data-wow-delay="0.2s" data-wow-duration="0.8s">
+                                <span>Discover Your Taste</span>
+                                <h2>Fresh Flavors, Warm Hospitality</h2>
+                            </div>
+                            <p class="wow fadeInUp" data-wow-delay="0.4s" data-wow-duration="0.8s">Experience the perfect blend of authentic flavors, fresh ingredients, and exceptional hospitality. Whether you're craving a quick bite or a family feast, every meal is crafted with care to make every visit memorable..</p>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-10 wow slideInLeft" data-wow-delay="0.3s" data-wow-duration="0.8s">
+                                <div class="single-caption mb-20">
+                                    <div class="caption-icon">
+                                        <span class="flaticon-restaurant"></span>
+                                    </div>
+                                    <div class="caption">
+                                        <p>Our skilled chefs prepare every dish with passion, precision, and years of culinary expertise.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-10">
+                                <div class="single-caption mb-20">
+                                    <div class="caption-icon">
+                                        <span class="flaticon-tools-and-utensils-1"></span>
+                                    </div>
+                                    <div class="caption">
+                                        <p>We use only the freshest ingredients to ensure every meal is flavorful, healthy, and satisfying.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-10">
+                                <div class="single-caption mb-20">
+                                    <div class="caption-icon">
+                                        <span class="flaticon-hat"></span>
+                                    </div>
+                                    <div class="caption">
+                                        <p>Every dish is prepared in a clean, safe kitchen while maintaining the highest standards of hygiene.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-10">
+                                <div class="single-caption mb-20">
+                                    <div class="caption-icon">
+                                        <span class="flaticon-restaurant"></span>
+                                    </div>
+                                    <div class="caption">
+                                        <p>Enjoy warm hospitality and fast, attentive service that makes every dining experience special.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-12">
+                        <!-- about-img -->
+                        <div class="about-img ">
+                            <img src="gallery/about.png" alt="">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- About Area End -->
+        <!--? About-2 Area Start -->
+        <div class="about-area2 section-padding30">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-lg-6 col-md-12">
+                        <!-- about-img -->
+                        <div class="about-img ">
+                            <img src="gallery/about2.png" alt="">
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-12 wow slideInRight" data-wow-delay="0.3s" data-wow-duration="0.8s">
+                        <div class="about-caption mb-50">
+                            <!-- Section Tittle -->
+                            <div class="section-tittle mb-35 wow fadeInUp" data-wow-delay="0.4s" data-wow-duration="0.8s">
+                                <span>About Our Restaurant</span>
+                                <h2>We Serve Delicious Food for Every Family!</h2>
+                            </div>
+                            <p class="pera-top wow fadeInUp" data-wow-delay="0.5s" data-wow-duration="0.8s">At our restaurant, we believe great food brings people together. Every dish is prepared with fresh, high-quality ingredients and authentic recipes to deliver exceptional taste and memorable dining experiences.</p>
+
+                            <p  class="mb-65 pera-bottom wow fadeInUp" data-wow-delay="0.6s" data-wow-duration="0.8s">Whether you're joining us for a family meal, a quick lunch, or a special celebration, our friendly team is dedicated to serving delicious food, refreshing beverages, and warm hospitality in a comfortable atmosphere.</p>
+                            <a href="about.html" class="border-btn wow fadeInUp" data-wow-delay="0.7s" data-wow-duration="0.8s">Learn More</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- About-2 Area End -->
+        <!--? Booking Room Start-->
+        <div class="booking-area section-bg pt-120 pb-130" data-background="gallery/section_bg04.png">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="cl-xl-7 col-lg-8 col-md-10">
+                        <!-- Section Tittle -->
+                        <div class="section-tittle text-center mb-40">
+                            <span>About Our Restaurant</span>
+                            <h2>Book A Table</h2>
+                        </div> 
+                    </div>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col-12">
+                        <form action="#">
+                            <div class="booking-wrap d-flex justify-content-between align-items-center">
+                                <!-- Single Select Box -->
+                                <div class="single-select-box mb-30">
+                                    <div class="select-this">
+                                        <div class="select-itms">
+                                            <div class="select-icon">
+                                                <i class="ti-user"></i>
+                                            </div>
+                                            <select name="select" id="select1">
+                                                <option value="">Select Number of Persons</option>
+                                                <option value="1 Person">1 Person</option>
+                                                <option value="2 Persons">2 Persons</option>
+                                                <option value="3 Persons">3 Persons</option>
+                                                <option value="4 Persons">4 Persons</option>
+                                                <option value="5 Persons">5 Persons</option>
+                                                <option value="6 Persons">6 Persons</option>
+                                                <option value="7 Persons">7 Persons</option>
+                                                <option value="8 Persons">8 Persons</option>
+                                                <option value="9 Persons">9 Persons</option>
+                                                <option value="10 Persons">10 Persons</option>
+                                                <option value="11 Persons">11 Persons</option>
+                                                <option value="12 Persons">12 Persons</option>
+                                                <option value="13 Persons">13 Persons</option>
+                                                <option value="14 Persons">14 Persons</option>
+                                                <option value="15 Persons">15 Persons</option>
+                                                <option value="16 Persons">16 Persons</option>
+                                                <option value="17 Persons">17 Persons</option>
+                                                <option value="18 Persons">18 Persons</option>
+                                                <option value="19 Persons">19 Persons</option>
+                                                <option value="20 Persons">20 Persons</option>
+                                                <option value="21 Persons">21 Persons</option>
+                                                <option value="22 Persons">22 Persons</option>
+                                                <option value="23 Persons">23 Persons</option>
+                                                <option value="24 Persons">24 Persons</option>
+                                                <option value="25 Persons">25 Persons</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- select in date -->
+                                <div class="single-select-box mb-30">
+                                    <div class="boking-datepicker">
+                                        <input id="datepicker1"  placeholder="Date" />
+                                    </div>
+                                </div>
+                                <!-- Single Select Box -->
+                                <div class="single-select-box mb-30">
+                                    <div class="boking-datepicker">
+                                        <input id="timepicker"  placeholder="Time" />
+                                    </div>
+                                </div>
+                                <!-- Single Select Box -->
+                                <div class="single-select-box mb-30">
+                                    <button class="btn select-btn" type="button" onclick="bookTableViaWhatsApp()">Book Now</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Booking Room End-->
+        <!--? Our Services Start -->
+        <div class="our-services section-padding30">
+            <div class="container">
+                <div class="row justify-content-sm-center">
+                    <div class="cl-xl-7 col-lg-8 col-md-10">
+                        <!-- Section Tittle -->
+                        <div class="section-tittle text-center mb-70">
+                            <span>Servicees We Offer</span>
+                            <h2>Our Best Services</h2>
+                        </div> 
+                    </div>
+                </div>
+                <div class="row">
+                    <div class=" col-lg-4 col-md-6 col-sm-6">
+                        <div class="single-services text-center mb-30">
+                            <div class="services-ion">
+                                <span class="flaticon-restaurant"></span>
+                            </div>
+                            <div class="services-cap">
+                                <h5><a href="#">Best Chef</a></h5>
+                                <p> Our experienced chefs prepare every dish with passion, creativity, and the finest ingredients to deliver authentic flavors in every bite.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class=" col-lg-4 col-md-6 col-sm-6">
+                        <div class="single-services active text-center mb-30">
+                            <div class="services-ion">
+                                <span class="flaticon-tools-and-utensils-1"></span>
+                            </div>
+                            <div class="services-cap">
+                                <h5><a href="#">Quality Food</a></h5>
+                                <p> We use only fresh, premium ingredients to create delicious meals that meet the highest standards of taste, quality, and hygiene.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class=" col-lg-4 col-md-6 col-sm-6">
+                        <div class="single-services text-center mb-30">
+                            <div class="services-ion">
+                                <span class="flaticon-restaurant"></span>
+                            </div>
+                            <div class="services-cap">
+                                <h5><a href="#">Perfect Cook</a></h5>
+                                <p>,Every meal is carefully cooked to perfection, ensuring rich flavors, consistent quality, and a memorable dining experience every time.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Our Services End -->
+        <!--? About-3 Start -->
+        <div class="about-area3 pt-180 pb-170 section-bg" data-background="gallery/section_bg03.png">
+            <div class="container">
+                <div class="row justify-content-end">
+                    <div class="col-xl-6 col-lg-6 col-md-9 col-sm-11">
+                        <!-- Section Tittle -->
+                        <div class="section-tittle section-tittle2 mb-40">
+                            <span>About Our Restaurant</span>
+                            <h2>Every Meal Is Crafted with Passion</h2>
+                            <p>We believe that great food creates unforgettable memories. From carefully selected fresh ingredients to expertly prepared dishes, every meal is made with passion, quality, and authentic flavors to delight every guest.</p>
+                        </div> 
+                        <!--Hero form -->
+                        <form id="subscribe-form" onsubmit="subscribeViaWhatsApp(event)" class="search-box">
+                            <div class="input-form">
+                                <input id="subscribe-number" type="text" placeholder="karak station" aria-label="karak station">
+                            </div>
+                            <div class="search-form">
+                                <button type="submit">Subscribe</button>
+                            </div>
+                        </form>
+                        <script>
+                            function subscribeViaWhatsApp(e){
+                                e.preventDefault();
+                                try{
+                                    var num = document.getElementById('subscribe-number').value.trim();
+                                    var msg = 'Hello! I would like to subscribe to Karak Station updates.' + (num ? ' My contact number: ' + num : '');
+                                    var shopDetails = window.KarakShopDetails ? window.KarakShopDetails.get() : { contact: '+97477821400' };
+                                    var wa = shopDetails.contact.replace(/\D/g, '');
+                                    var url = 'https://wa.me/' + wa + '?text=' + encodeURIComponent(msg);
+                                    window.open(url, '_blank');
+                                }catch(err){
+                                    console.error('Subscribe via WhatsApp failed', err);
+                                }
+                                return false;
+                            }
+                        </script>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- About-3 End -->
+        <!--? Blog Area Start -->
+        <section class="blogs-area section-padding30">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-6">
+                        <!-- Section Tittle -->
+                        <div class="section-tittle text-center mb-70">
+                            <span>Our New Blog News</span>
+                            <h2>Our Recnet News</h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" id="home-recent-posts">
+                    <!-- Recent blog posts from admin/blog.html will be injected here -->
+                </div>
+                <script>
+                    (function(){
+                        async function renderHomeRecent(){
+                            const container = document.getElementById('home-recent-posts');
+                            if(!container) return;
+                            try {
+                                const data = await window.KarakDB.getBlog();
+                                const posts = (data.posts || []).slice().sort((a,b)=> new Date(b.date)-new Date(a.date));
+                                if(!posts.length) return;
+                                const recent = posts.slice(0,3);
+                                container.innerHTML = recent.map(post => {
+                                    const img = post.imageUrl || post.image || 'gallery/blog1.png';
+                                    const d = new Date(post.date || Date.now());
+                                    const date = `${d.getDate()} ${d.toLocaleString('en-US',{month:'short'})}, ${d.getFullYear()}`;
+                                    return `<div class="col-lg-4 col-md-6"><div class="single-blogs mb-100"><div class="blog-img"><img src="${img}" alt="${post.title || ''}"></div><div class="blog-cap"><span class="color1">${date}</span><h4><a href="${post.link || 'blog.html'}">${post.title || 'Untitled'}</a></h4></div></div></div>`;
+                                }).join('');
+                                document.getElementById('home-updates').hidden = false;
+                            } catch(e) { console.error('Home blog load failed',e); }
+                        }
+                        document.addEventListener('DOMContentLoaded', renderHomeRecent);
+                    })();
+                </script>
+            </div>
+        </section>
+        <!-- Blog Area End -->
+        </template>
+    </main>
+    <footer class="ks-site-footer" aria-label="Karak Station site footer">
+        <div class="footer-area">
+            <div class="container">
+                <div class="ks-footer-top">
+                    <a class="ks-footer-brand" href="index.html" aria-label="Karak Station home">
+                        <span>KARAK</span><strong>STATION</strong>
+                    </a>
+                    <form class="ks-footer-newsletter" onsubmit="subscribeFooterViaWhatsApp(event)">
+                        <label for="footer-email">Get updates from us</label>
+                        <div class="ks-footer-email-field">
+                            <input id="footer-email" name="email" type="email" placeholder="Enter your email" autocomplete="email" required>
+                            <button type="submit" aria-label="Subscribe to Karak Station updates"><i class="fas fa-arrow-right" aria-hidden="true"></i></button>
+                        </div>
+                    </form>
+                </div>
+                <div class="ks-footer-divider"></div>
+                <div class="ks-footer-links">
+                    <nav class="ks-footer-group" aria-label="Menu links">
+                        <h2>Menu</h2>
+                        <ul>
+                            <li><a href="menu.html">Browse Menu</a></li>
+                            <li><a href="special-deal.html">Today’s Special</a></li>
+                            <li><a href="index.html#book-table">Book a Table</a></li>
+                        </ul>
+                    </nav>
+                    <nav class="ks-footer-group" aria-label="Support links">
+                        <h2>Support</h2>
+                        <ul>
+                            <li><a href="contact.html">Contact Us</a></li>
+                            <li><a href="about.html">About Karak Station</a></li>
+                            <li><a href="tel:+97477821400">+974 77821400</a></li>
+                        </ul>
+                    </nav>
+                    <nav class="ks-footer-group" aria-label="Explore links">
+                        <h2>Explore</h2>
+                        <ul>
+                            <li><a href="blog.html">News &amp; Events</a></li>
+                            <li><a href="contact.html">Umm Al Amad, Qatar</a></li>
+                            <li><span class="ks-opening-hours">Open 24 hours</span></li>
+                        </ul>
+                    </nav>
+                    <div class="ks-footer-social" aria-label="Social media links">
+                        <a href="https://www.facebook.com/profile.php?id=61590693355336" target="_blank" rel="noopener" aria-label="Karak Station on Facebook"><i class="fab fa-facebook-f" aria-hidden="true"></i></a>
+                        <a href="https://www.instagram.com/karakstationqt/" target="_blank" rel="noopener" aria-label="Karak Station on Instagram"><i class="fab fa-instagram" aria-hidden="true"></i></a>
+                        <a href="https://wa.me/97477821400" target="_blank" rel="noopener" aria-label="Contact Karak Station on WhatsApp"><i class="fab fa-whatsapp" aria-hidden="true"></i></a>
+                    </div>
+                </div>
+                <div class="ks-footer-bottom">
+                    <p><!-- Link back to Beeone Digital can't be removed. Template is licensed under CC BY 3.0. -->
+                        Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | made with <i class="fa fa-heart" aria-hidden="true"></i> by Beeone Digital
+                        <!-- Link back to Beeone Digital can't be removed. Template is licensed under CC BY 3.0. --></p>
+                    <a href="admin/index.html">Admin</a>
+                </div>
+            </div>
+        </div>
+        <script>
+            function subscribeFooterViaWhatsApp(event) {
+                event.preventDefault();
+                const email = document.getElementById('footer-email').value.trim();
+                const shopDetails = window.KarakShopDetails ? window.KarakShopDetails.get() : { contact: '+97477821400' };
+                const phoneNumber = shopDetails.contact.replace(/\D/g, '');
+                const message = 'Hello! I would like to subscribe to Karak Station updates. My email address: ' + email;
+                window.open('https://wa.me/' + phoneNumber + '?text=' + encodeURIComponent(message), '_blank');
+            }
+        </script>
+    </footer>
+    <!-- Scroll Up -->
+    <div id="back-top" >
+        <a title="Go to Top" href="#"> <i class="fas fa-level-up-alt"></i></a>
+    </div>
+
+    <!-- JS here -->
+
+    <script src="./js/vendor/modernizr-3.5.0.min.js"></script>
+    <!-- Jquery, Popper, Bootstrap -->
+    <script src="./js/vendor/jquery-1.12.4.min.js"></script>
+    <script src="./js/popper.min.js"></script>
+    <script src="./js/bootstrap.min.js"></script>
+    <!-- Jquery Mobile Menu -->
+    <script src="./js/jquery.slicknav.min.js"></script>
+
+    <!-- Jquery Slick , Owl-Carousel Plugins -->
+    <script src="./js/owl.carousel.min.js"></script>
+    <script src="./js/slick.min.js"></script>
+    <!-- One Page, Animated-HeadLin -->
+    <script src="./js/wow.min.js"></script>
+    <script src="./js/animated.headline.js"></script>
+    <script src="./js/jquery.magnific-popup.js"></script>
+
+    <!-- Date Picker -->
+    <script src="./js/gijgo.min.js"></script>
+    <!-- Nice-select, sticky -->
+    <script src="./js/jquery.nice-select.min.js"></script>
+    <script src="./js/jquery.sticky.js"></script>
+    
+    <!-- contact js -->
+    <script src="./js/contact.js"></script>
+    <script src="./js/jquery.form.js"></script>
+    <script src="./js/jquery.validate.min.js"></script>
+    <script src="./js/mail-script.js"></script>
+    <script src="./js/jquery.ajaxchimp.min.js"></script>
+    
+    <!-- Jquery Plugins, main Jquery -->	
+    <script src="./js/plugins.js"></script>
+    <script src="./js/site-chrome.js"></script>
+    <script src="./js/main.js"></script>
+    <script src="./js/supabase-config.js"></script>
+    <script src="./js/supabase-client.js"></script>
+    <script src="./js/karak-data.js"></script>
+    
+    <!-- Water Bubble Animation -->
+    <script src="./js/water-animation.js"></script>
+    
+    <script>
+        // Initialize WOW.js for scroll animations
+        new WOW().init();
+    </script>
+    
+    <script>
+        let specialPosterFoodsCache = [];
+        async function getSpecialPosterFoods() {
+            try {
+                specialPosterFoodsCache = await window.KarakDB.getSpecialFoods();
+            } catch(e) {
+                console.error('Special poster load failed', e);
+            }
+            specialPosterFoodsCache = specialPosterFoodsCache.filter(item => item.status !== 'unavailable');
+            return specialPosterFoodsCache;
+        }
+
+        function normalizeSpecialImage(image) {
+            if (!image || !image.trim()) {
+                return 'menu/page-thumbs/page2_Im0.jpg';
+            }
+            const trimmed = image.trim();
+            if (trimmed.startsWith('special/')) {
+                return 'menu/page-thumbs/page2_Im0.jpg';
+            }
+            return trimmed;
+        }
+
+        async function renderSpecialHomeFoods() {
+            const foods = await getSpecialPosterFoods();
+            if (!foods.length) {
+                $('.special-carousel').html('');
+                $('.special-foods-carousel').hide();
+                return foods;
+            }
+            const html = foods.map(food => {
+                const imageUrl = food.imageData || normalizeSpecialImage(food.image);
+                return `
+                    <div class="special-food-item">
+                        <div class="food-image" style="background-image: url(${imageUrl});"></div>
+                        <div class="food-info">
+                            <h4>${food.name}</h4>
+                            ${food.arabicName ? `<p class="arabic-name">${food.arabicName}</p>` : ''}
+                            <p>${food.desc || ''}</p>
+                            <p class="food-price">${(food.amount || food.price) ? 'Amount: ' + (food.amount || food.price) : ''}</p>
+                            <button type="button" class="btn order-btn special-order-trigger" data-special-index="${foods.indexOf(food)}">Order Now</button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+            $('.special-carousel').html(html);
+            $('.special-foods-carousel').show();
+            return foods;
+        }
+
+        // Special Deal customer order modal
+        function ensureSpecialOrderModal() {
+            if (document.getElementById('specialOrderModal')) return;
+            const modal = document.createElement('div');
+            modal.id = 'specialOrderModal';
+            modal.innerHTML = `
+                <div class="special-order-backdrop"></div>
+                <div class="special-order-dialog" role="dialog" aria-modal="true" aria-labelledby="specialOrderTitle">
+                    <button type="button" class="special-order-close" aria-label="Close">&times;</button>
+                    <h3 id="specialOrderTitle">Order Special Food</h3>
+                    <p id="specialOrderFoodName" class="mb-3"></p>
+                    <form id="specialOrderForm">
+                        <div class="form-group">
+                            <label for="specialCustomerName">Customer Name</label>
+                            <input id="specialCustomerName" class="form-control" type="text" maxlength="80" required placeholder="Enter your name">
+                        </div>
+                        <div class="form-group">
+                            <label for="specialCustomerPhone">WhatsApp Number</label>
+                            <div style="display:flex;gap:8px;align-items:center;">
+                                <span class="form-control" style="max-width:78px;background:#f5f5f5;">+974</span>
+                                <input id="specialCustomerPhone" class="form-control" type="tel" inputmode="numeric" maxlength="8" pattern="[0-9]{8}" required placeholder="8 digit number">
+                            </div>
+                            <small class="form-text text-muted">Qatar number: 8 digits</small>
+                        </div>
+                        <button id="specialOrderSubmit" type="submit" class="btn btn-primary btn-block">Continue to WhatsApp</button>
+                    </form>
+                </div>`;
+            const style = document.createElement('style');
+            style.textContent = `
+                #specialOrderModal{position:fixed;inset:0;z-index:99999;display:none;align-items:center;justify-content:center;padding:20px}
+                #specialOrderModal.show{display:flex}.special-order-backdrop{position:absolute;inset:0;background:rgba(0,0,0,.65)}
+                .special-order-dialog{position:relative;width:100%;max-width:430px;background:#fff;border-radius:12px;padding:25px;box-shadow:0 20px 60px rgba(0,0,0,.3)}
+                .special-order-close{position:absolute;right:12px;top:8px;border:0;background:transparent;font-size:30px;line-height:1;cursor:pointer}
+                .special-order-dialog h3{margin:0 30px 8px 0}.special-order-dialog label{font-weight:600}
+            `;
+            document.head.appendChild(style);
+            document.body.appendChild(modal);
+            const close = () => modal.classList.remove('show');
+            modal.querySelector('.special-order-backdrop').addEventListener('click', close);
+            modal.querySelector('.special-order-close').addEventListener('click', close);
+            modal.querySelector('#specialOrderForm').addEventListener('submit', async function(e){
+                e.preventDefault();
+                const index = Number(modal.dataset.foodIndex);
+                const food = specialPosterFoodsCache[index];
+                if (!food) { alert('Special food could not be found. Please refresh the page.'); return; }
+                const name = document.getElementById('specialCustomerName').value.trim();
+                const phone = document.getElementById('specialCustomerPhone').value.replace(/\D/g,'');
+                if (!name) { alert('Please enter your name.'); return; }
+                if (!/^\d{8}$/.test(phone)) { alert('Please enter a valid Qatar WhatsApp number with 8 digits.'); return; }
+                const submit = document.getElementById('specialOrderSubmit');
+                submit.disabled = true; submit.textContent = 'Saving order...';
+                const imageUrl = food.imageData || normalizeSpecialImage(food.image);
+                const message = 'Hello! I would like to order the following special food:\n\n' +
+                    'Food: ' + food.name + '\n' +
+                    'Customer Name: ' + name + '\n' +
+                    'WhatsApp: +974 ' + phone + '\n' +
+                    'Amount: ' + (food.amount || food.price || 'Please confirm') + '\n\n' +
+                    'Please confirm availability and order details. Thank you!';
+                const whatsappNumber = getWhatsAppPhoneNumber();
+                const restaurantPhone = whatsappNumber.replace(/\D/g,'');
+                if (!restaurantPhone) {
+                    alert('Restaurant WhatsApp number is not configured.');
+                    submit.disabled = false; submit.textContent = 'Continue to WhatsApp';
+                    return;
+                }
+
+                // Open WhatsApp immediately from the user's click. Do not wait for Supabase,
+                // otherwise GitHub Pages/browser popup protection can delay or block WhatsApp.
+                const whatsappUrl = 'https://wa.me/' + restaurantPhone + '?text=' + encodeURIComponent(message);
+                const whatsappWindow = window.open(whatsappUrl, '_blank');
+                if (!whatsappWindow) window.location.href = whatsappUrl;
+                close();
+                submit.disabled = false; submit.textContent = 'Continue to WhatsApp';
+
+                // Save the order in Supabase in the background. WhatsApp does not wait for this.
+                if (window.KarakDB && typeof window.KarakDB.createOrder === 'function') {
+                    window.KarakDB.createOrder({
+                        source:'special-poster', specialPoster:true, orderType:'whatsapp',
+                        customerCountryCode:'+974', customerPhoneNumber:phone, customerName:name,
+                        items:[{name:food.name, image:imageUrl, price:food.amount || food.price || ''}],
+                        total:food.amount || food.price || '', message, status:'pending'
+                    }).then(() => {
+                        console.log('Special poster order saved to Supabase.');
+                    }).catch(error => {
+                        console.error('WhatsApp opened, but special deal order could not be saved to Supabase:', error);
+                    });
+                } else {
+                    console.error('WhatsApp opened, but Supabase order service is not ready.');
+                }
+            });
+        }
+
+        function openSpecialOrderModal(index) {
+            ensureSpecialOrderModal();
+            const food = specialPosterFoodsCache[Number(index)];
+            if (!food) return;
+            const modal = document.getElementById('specialOrderModal');
+            modal.dataset.foodIndex = String(index);
+            document.getElementById('specialOrderFoodName').textContent = food.name + (food.amount || food.price ? ' — ' + (food.amount || food.price) : '');
+            document.getElementById('specialCustomerName').value = '';
+            document.getElementById('specialCustomerPhone').value = '';
+            modal.classList.add('show');
+            setTimeout(() => document.getElementById('specialCustomerName').focus(), 50);
+        }
+
+        document.addEventListener('click', function(e) {
+            const button = e.target.closest('.special-order-trigger');
+            if (button) openSpecialOrderModal(button.dataset.specialIndex);
+        });
+
+        function getWhatsAppOrderSettings() {
+            try {
+                const stored = localStorage.getItem('karakWhatsAppOrderSettings');
+                if (stored) {
+                    const parsed = JSON.parse(stored);
+                    return {
+                        countryCode: parsed.countryCode || '+974',
+                        phoneNumber: parsed.phoneNumber || '77821400'
+                    };
+                }
+            } catch (e) {}
+            return {
+                countryCode: '+974',
+                phoneNumber: '77821400'
+            };
+        }
+
+        function getWhatsAppPhoneNumber() {
+            const settings = getWhatsAppOrderSettings();
+            const normalizedCode = String(settings.countryCode || '').trim().replace(/\D/g, '');
+            const normalizedNumber = String(settings.phoneNumber || '').trim().replace(/\D/g, '');
+            if (!normalizedCode && !normalizedNumber) {
+                return '';
+            }
+            return normalizedCode ? `+${normalizedCode}${normalizedNumber}` : `+${normalizedNumber}`;
+        }
+
+        function getWhatsAppBookingSettings() {
+            try {
+                const stored = localStorage.getItem('karakWhatsAppBookingSettings');
+                if (stored) {
+                    const parsed = JSON.parse(stored);
+                    return {
+                        countryCode: parsed.countryCode || '+974',
+                        phoneNumber: parsed.phoneNumber || '77821400'
+                    };
+                }
+            } catch (e) {}
+            return {
+                countryCode: '+974',
+                phoneNumber: '77821400'
+            };
+        }
+
+        function getWhatsAppBookingPhoneNumber() {
+            const settings = getWhatsAppBookingSettings();
+            const normalizedCode = String(settings.countryCode || '').trim().replace(/\D/g, '');
+            const normalizedNumber = String(settings.phoneNumber || '').trim().replace(/\D/g, '');
+            if (!normalizedCode && !normalizedNumber) {
+                return '';
+            }
+            return normalizedCode ? `+${normalizedCode}${normalizedNumber}` : `+${normalizedNumber}`;
+        }
+
+        async function loadWhatsAppSettingsFromSupabase() {
+            try {
+                const [orderSettings, bookingSettings] = await Promise.all([
+                    KarakDB.getSetting('whatsapp_order', null),
+                    KarakDB.getSetting('whatsapp_booking', null)
+                ]);
+                if (orderSettings) {
+                    localStorage.setItem('karakWhatsAppOrderSettings', JSON.stringify(orderSettings));
+                }
+                if (bookingSettings) {
+                    localStorage.setItem('karakWhatsAppBookingSettings', JSON.stringify(bookingSettings));
+                }
+            } catch (error) {
+                console.warn('Could not load WhatsApp settings from Supabase; using this browser cache.', error);
+            }
+        }
+
+        loadWhatsAppSettingsFromSupabase();
+
+        // Initialize datepickers
+        $('#datepicker1').datepicker({
+            uiLibrary: 'bootstrap4',
+            format: 'mm/dd/yyyy'
+        });
+        
+        $('#timepicker').timepicker({
+            uiLibrary: 'bootstrap4',
+            format: 'hh:mm A'
+        });
+        
+        function bookTableViaWhatsApp() {
+            const person = document.getElementById('select1').value;
+            const date = document.getElementById('datepicker1').value;
+            const time = document.getElementById('timepicker').value;
+            
+            if (!person || !date || !time) {
+                alert('Please fill in all booking details (Person, Date, and Time)');
+                return;
+            }
+            
+            const whatsappNumber = getWhatsAppBookingPhoneNumber();
+            const message = 'Hello! I would like to book a table:\n\n' +
+                            'Number of Persons: ' + person + '\n' +
+                            'Date: ' + date + '\n' +
+                            'Time: ' + time + '\n\n' +
+                            'Please confirm the booking. Thank you!';
+            
+            const encodedMessage = encodeURIComponent(message);
+            const phoneNumber = whatsappNumber.replace(/\D/g, '');
+            const whatsappUrl = 'https://wa.me/' + phoneNumber + '?text=' + encodedMessage;
+            
+            window.open(whatsappUrl, '_blank');
+        }
+    </script>
+    
+    </body>
+</html>

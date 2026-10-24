@@ -1,0 +1,785 @@
+<!doctype html>
+<html class="no-js" lang="en">
+<head>
+    <script src="./js/supabase-config.js"></script>
+    <script src="./js/supabase-client.js"></script>
+    <script src="./js/karak-data.js"></script>
+    <script src="./js/currency-settings.js"></script>
+    <script src="./js/shop-details.js" defer></script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Explore current Karak Station special deals.">
+    <title>KARAK STATION | Special Deal</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/slicknav.css">
+    <link rel="stylesheet" href="css/fontawesome-all.min.css">
+    <link rel="stylesheet" href="css/themify-icons.css">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            min-width: 0;
+        }
+        .logo a {
+            display: flex;
+            flex: 0 0 auto;
+            align-items: center;
+        }
+        .logo a img {
+            display: block;
+            width: 52px;
+            height: 52px;
+            object-fit: contain;
+        }
+        .logo .brand-text {
+            color: #ff0033;
+            font-size: clamp(18px, 2.2vw, 32px);
+            font-weight: 700;
+            line-height: 1.1;
+            letter-spacing: 0.02em;
+            white-space: nowrap;
+        }
+        .main-menu ul#navigation > li {
+            position: relative;
+        }
+        .main-menu ul#navigation > li > ul.submenu {
+            left: 50%;
+            min-width: 180px;
+            padding: 10px 0;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+            text-align: left;
+            transform: translateX(-50%);
+        }
+        .special-deal-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 24px;
+        }
+        .deal-card {
+            overflow: hidden;
+            background: #fff;
+            border: 1px solid #e8e8e8;
+            border-radius: 16px;
+            box-shadow: 0 8px 28px rgba(20, 20, 20, .06);
+        }
+        .deal-card img {
+            display: block;
+            width: 100%;
+            height: 230px;
+            object-fit: cover;
+            background: #f0f0f0;
+        }
+        .deal-card-content {
+            padding: 20px;
+        }
+        .deal-card h2 {
+            margin: 0 0 6px;
+            color: #242424;
+            font-size: 21px;
+        }
+        .deal-card .arabic-name {
+            margin-bottom: 12px;
+            color: #747b83;
+            font-size: 17px;
+        }
+        .deal-card .description {
+            min-height: 48px;
+            margin-bottom: 16px;
+            color: #656b73;
+            line-height: 1.55;
+        }
+        .deal-price {
+            display: inline-block;
+            padding: 8px 12px;
+            border-radius: 999px;
+            color: #b83500;
+            background: #fff1eb;
+            border: 1px solid #ffd2bf;
+            font-weight: 700;
+        }
+        .deal-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 18px;
+        }
+        .deal-action {
+            display: inline-flex;
+            min-height: 42px;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 9px 16px;
+            border: 1px solid #e8e8e8;
+            border-radius: 6px;
+            color: #242424;
+            background: #fff;
+            font: inherit;
+            font-weight: 600;
+            line-height: 1.2;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .deal-action:hover,
+        .deal-action:focus-visible {
+            color: #fff;
+            background: #ff0033;
+            border-color: #ff0033;
+        }
+        .deal-order-action {
+            color: #fff;
+            background: #ff0033;
+            border-color: #ff0033;
+        }
+        .deal-order-action:hover,
+        .deal-order-action:focus-visible {
+            color: #fff;
+            background: #d9002b;
+            border-color: #d9002b;
+        }
+        .deal-order-modal {
+            width: min(540px, calc(100% - 28px));
+            max-width: none;
+            max-height: min(90vh, 760px);
+            padding: 0;
+            overflow: hidden;
+            border: 1px solid #ff5600;
+            border-radius: 16px;
+            color: #303030;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, .25);
+        }
+        .deal-order-modal::backdrop {
+            background: rgba(20, 20, 20, .6);
+        }
+        .deal-order-form {
+            display: flex;
+            max-height: min(90vh, 760px);
+            flex-direction: column;
+        }
+        .deal-order-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            margin: 0 16px;
+            padding: 18px 0 14px;
+            border-bottom: 2px solid #ff5600;
+        }
+        .deal-order-header h2 {
+            margin: 0;
+            color: #ff5600;
+            font-size: 23px;
+            font-weight: 700;
+        }
+        .deal-order-close {
+            width: 36px;
+            height: 36px;
+            padding: 0;
+            border: 0;
+            border-radius: 50%;
+            color: #ff5600;
+            background: transparent;
+            font-size: 28px;
+            font-weight: 700;
+            line-height: 1;
+            cursor: pointer;
+        }
+        .deal-order-close:hover,
+        .deal-order-close:focus-visible {
+            background: #fff1eb;
+        }
+        .deal-order-body {
+            padding: 18px 16px;
+            overflow-y: auto;
+        }
+        .deal-order-summary {
+            margin-bottom: 20px;
+            padding: 14px;
+            border: 1px solid #ffe0d2;
+            border-radius: 10px;
+            background: #fff8f4;
+        }
+        .deal-order-summary h3 {
+            margin: 0 0 6px;
+            font-size: 18px;
+            font-weight: 700;
+        }
+        .deal-order-summary p {
+            margin: 0 0 8px;
+            color: #656b73;
+            line-height: 1.5;
+        }
+        .deal-order-summary .deal-order-price {
+            color: #ff5600;
+            font-weight: 700;
+        }
+        .deal-order-field {
+            display: block;
+            margin-bottom: 15px;
+            color: #333;
+            font-weight: 700;
+        }
+        .deal-order-field input,
+        .deal-order-field textarea {
+            display: block;
+            width: 100%;
+            min-height: 50px;
+            margin-top: 8px;
+            padding: 12px 14px;
+            border: 1px solid #ddd;
+            border-radius: 9px;
+            color: #303030;
+            background: #fff;
+            font: inherit;
+            font-weight: 400;
+        }
+        .deal-order-field textarea {
+            min-height: 76px;
+            resize: vertical;
+        }
+        .deal-order-field input:focus,
+        .deal-order-field textarea:focus {
+            border-color: #ff5600;
+            outline: 2px solid rgba(255, 86, 0, .15);
+        }
+        .deal-phone-field {
+            display: flex;
+            min-height: 50px;
+            margin-top: 8px;
+            overflow: hidden;
+            border: 1px solid #ddd;
+            border-radius: 9px;
+        }
+        .deal-phone-prefix {
+            display: flex;
+            flex: 0 0 auto;
+            align-items: center;
+            padding: 0 12px;
+            border-right: 1px solid #ddd;
+            background: #f5f5f5;
+            font-weight: 700;
+        }
+        .deal-order-field .deal-phone-field input {
+            min-width: 0;
+            min-height: 48px;
+            margin: 0;
+            border: 0;
+            border-radius: 0;
+        }
+        .deal-order-help {
+            display: block;
+            margin-top: 6px;
+            color: #777;
+            font-size: 13px;
+            font-weight: 400;
+        }
+        .deal-order-error {
+            margin: 0 0 14px;
+            color: #b42318;
+            font-size: 14px;
+        }
+        .deal-order-footer {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: flex-end;
+            padding: 14px 16px 16px;
+            border-top: 1px solid #eee;
+        }
+        .deal-order-footer button {
+            min-height: 44px;
+            padding: 10px 16px;
+        }
+        @media (max-width: 480px) {
+            .deal-order-header h2 { font-size: 21px; }
+            .deal-order-footer button { flex: 1 1 140px; }
+            .deal-phone-prefix { padding: 0 9px; font-size: 14px; }
+        }
+        .deal-empty,
+        .deal-error {
+            padding: 28px;
+            color: #656b73;
+            background: #fff;
+            border: 1px solid #e8e8e8;
+            border-radius: 12px;
+            text-align: center;
+        }
+        .footer-logo img {
+            filter: brightness(0) invert(1);
+        }
+        #back-top {
+            position: fixed;
+            right: 20px;
+            bottom: 20px;
+            z-index: 20;
+        }
+        @media (max-width: 1199px) {
+            .logo a img { width: 46px; height: 46px; }
+            .logo .brand-text { font-size: clamp(16px, 2vw, 24px); }
+        }
+        @media (max-width: 991px) {
+            .logo a img { width: 42px; height: 42px; }
+            .logo .brand-text { font-size: 18px; }
+            .main-menu ul#navigation > li > ul.submenu {
+                left: 0;
+                transform: none;
+            }
+        }
+        @media (max-width: 767px) {
+            .logo { gap: 8px; }
+            .logo a img { width: 38px; height: 38px; }
+            .logo .brand-text { font-size: 15px; letter-spacing: 0; }
+            .main-header .container-fluid { padding-right: 15px; padding-left: 15px; }
+            .deal-card img { height: 210px; }
+            .special-deal-grid { gap: 16px; }
+        }
+    </style>
+    <link rel="stylesheet" href="css/site-chrome.css">
+    <link rel="stylesheet" href="css/special-deal-design.css">
+</head>
+<body class="ks-special-deal-page">
+    <div id="preloader-active">
+        <div class="preloader d-flex align-items-center justify-content-center">
+            <div class="preloader-inner position-relative">
+                <div class="preloader-circle"></div>
+                <div class="preloader-img pere-text">
+                    <img src="logo/logo.png" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+    <header>
+        <div class="header-area">
+            <div class="main-header header-sticky">
+                <div class="container-fluid">
+                    <div class="row align-items-center">
+                        <div class="col-xl-2 col-lg-2 col-md-1">
+                            <div class="logo d-flex align-items-center">
+                                <a href="index.html"><img src="logo/logo.png" alt=""></a>
+                                <span class="brand-text">KARAK STATION</span>
+                            </div>
+                        </div>
+                        <div class="col-xl-10 col-lg-10 col-md-10">
+                            <div class="menu-main d-flex align-items-center justify-content-end">
+                                <div class="main-menu f-right d-none d-lg-block">
+                                    <nav aria-label="Main navigation">
+                                        <ul id="navigation">
+                                            <li><a href="index.html">Home</a></li>
+                                            <li><a href="about.html">About</a></li>
+                                            <li><a href="menu.html">Menu</a></li>
+                                            <li><a href="special-deal.html" aria-current="page">Special Deal</a></li>
+                                            <li><a href="blog.html">Blog</a></li>
+                                            <li><a href="contact.html">Contact</a></li>
+                                        </ul>
+                                    </nav>
+                                </div>
+                                <div class="header-right-btn f-right d-none d-lg-block ml-20">
+                                    <a href="menu.html" class="border-btn header-btn">Order Online</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="mobile_menu d-block d-lg-none"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <main>
+        <section class="gallery-area fix ks-specials-section">
+            <div class="gallery-top section-bg pt-90 pb-40" data-background="gallery/section_bg01.png">
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-xl-7 col-lg-8 col-md-10">
+                            <div class="section-tittle text-center mb-70">
+                                <span>Fresh picks, made for you</span>
+                                <h2>Today’s Special</h2>
+                                <p>Discover today’s featured dishes, prepared fresh and ready to order.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <div id="special-deal-list" class="special-deal-grid" aria-live="polite">
+                    <p class="deal-empty">Loading special deals...</p>
+                </div>
+            </div>
+        </section>
+    </main>
+    <footer aria-label="Restaurant site footer with contact information">
+        <div class="footer-area section-bg" data-background="gallery/section_bg02.png">
+            <div class="container">
+                <div class="footer-top footer-padding">
+                    <div class="row d-flex justify-content-between">
+                        <div class="col-xl-4 col-lg-4 col-md-5 col-sm-8">
+                            <div class="single-footer-caption mb-50">
+                                <div class="footer-logo">
+                                    <a href="index.html"><img src="logo/karak_station_logo.png" alt="Karak Station logo"></a>
+                                </div>
+                                <div class="footer-contact" aria-labelledby="footer-contact-label">
+                                    <h4 id="footer-contact-label">KARAK STATION</h4>
+                                    <p><strong>Restaurant &amp; Cafeteria / مطعم &amp; كافتيريا</strong></p>
+                                    <p>24 HOURS OPEN / مفتوح 24 ساعة</p>
+                                    <p>FREE DELIVERY / توصيل مجاني</p>
+                                    <p>Umm Al Amad, Qatar / أم العماد, قطر</p>
+                                    <p><a href="tel:+97477821400">+974 77821400</a></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-2 col-lg-2 col-md-5 col-sm-6">
+                            <div class="single-footer-caption mb-50">
+                                <div class="footer-tittle">
+                                    <h4>Navigation</h4>
+                                    <ul aria-label="Footer Navigation">
+                                        <li><a href="index.html">Home</a></li>
+                                        <li><a href="blog.html">Events</a></li>
+                                        <li><a href="index.html#testimonial">Testimonial</a></li>
+                                        <li><a href="menu.html">Categories</a></li>
+                                        <li><a href="contact.html">Contacts</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-4 col-lg-4 col-md-5 col-sm-7">
+                            <div class="single-footer-caption mb-50">
+                                <div class="footer-tittle">
+                                    <h4>Instagram Feed</h4>
+                                </div>
+                                <div class="instagram-gellay">
+                                    <ul class="insta-feed">
+                                        <li><a href="#"><img src="gallery/instagram1.png" alt=""></a></li>
+                                        <li><a href="#"><img src="gallery/instagram2.png" alt=""></a></li>
+                                        <li><a href="#"><img src="gallery/instagram3.png" alt=""></a></li>
+                                        <li><a href="#"><img src="gallery/instagram4.png" alt=""></a></li>
+                                        <li><a href="#"><img src="gallery/instagram5.png" alt=""></a></li>
+                                        <li><a href="#"><img src="gallery/instagram6.png" alt=""></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="footer-bottom">
+                    <div class="row d-flex justify-content-between align-items-center">
+                        <div class="col-xl-9 col-lg-8">
+                            <div class="footer-copy-right">
+                                <p>Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | made with <i class="fa fa-heart" aria-hidden="true"></i> by Beeone Digital</p>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-lg-4">
+                            <div class="footer-social f-right">
+                                <span>Follow Us</span>
+                                <a href="https://www.facebook.com/profile.php?id=61590693355336" target="_blank" rel="noopener"><i class="fab fa-facebook-f"></i></a>
+                                <a href="https://www.instagram.com/karakstationqt/" target="_blank" rel="noopener"><i class="fab fa-instagram"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <dialog class="deal-order-modal" id="deal-order-modal" aria-labelledby="deal-order-title">
+        <form class="deal-order-form" id="deal-order-form">
+            <div class="deal-order-header">
+                <h2 id="deal-order-title">Your Order 🛒</h2>
+                <button class="deal-order-close" type="button" id="deal-order-close" aria-label="Close order popup">×</button>
+            </div>
+            <div class="deal-order-body">
+                <section class="deal-order-summary" aria-label="Selected special deal">
+                    <h3 id="deal-order-name"></h3>
+                    <p id="deal-order-description"></p>
+                    <p class="deal-order-price" id="deal-order-price"></p>
+                </section>
+                <label class="deal-order-field" for="deal-customer-name">
+                    Customer Name
+                    <input id="deal-customer-name" name="customerName" type="text" autocomplete="name" placeholder="Enter customer name" required>
+                </label>
+                <label class="deal-order-field" for="deal-customer-phone">
+                    WhatsApp Number
+                    <span class="deal-phone-field">
+                        <span class="deal-phone-prefix" aria-hidden="true">🇶🇦 +974</span>
+                        <input id="deal-customer-phone" name="customerPhone" type="tel" inputmode="numeric" autocomplete="tel-national" maxlength="8" pattern="[0-9]{8}" placeholder="Enter 8 digit number" aria-label="Qatar WhatsApp number" required>
+                    </span>
+                    <small class="deal-order-help">Qatar number: 8 digits. +974 is already included.</small>
+                </label>
+                <label class="deal-order-field" for="deal-customer-address">
+                    Address
+                    <textarea id="deal-customer-address" name="customerAddress" autocomplete="street-address" placeholder="Enter delivery address"></textarea>
+                </label>
+                <p class="deal-order-error" id="deal-order-error" role="alert" hidden></p>
+            </div>
+            <div class="deal-order-footer">
+                <button class="deal-action" type="button" id="deal-order-cancel">Cancel</button>
+                <button class="deal-action deal-order-action" type="submit"><i class="fab fa-whatsapp" aria-hidden="true"></i><span>Send order to WhatsApp</span></button>
+            </div>
+        </form>
+    </dialog>
+    <div id="back-top">
+        <a title="Go to Top" href="#"><i class="fas fa-level-up-alt"></i></a>
+    </div>
+    <script src="js/vendor/modernizr-3.5.0.min.js"></script>
+    <script src="js/vendor/jquery-1.12.4.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery.slicknav.min.js"></script>
+    <script src="js/owl.carousel.min.js"></script>
+    <script src="js/slick.min.js"></script>
+    <script src="js/wow.min.js"></script>
+    <script src="js/animated.headline.js"></script>
+    <script src="js/jquery.magnific-popup.js"></script>
+    <script src="js/gijgo.min.js"></script>
+    <script src="js/jquery.nice-select.min.js"></script>
+    <script src="js/jquery.sticky.js"></script>
+    <script src="js/contact.js"></script>
+    <script src="js/jquery.form.js"></script>
+    <script src="js/jquery.validate.min.js"></script>
+    <script src="js/jquery.ajaxchimp.min.js"></script>
+    <script src="js/plugins.js"></script>
+    <script src="js/site-chrome.js"></script>
+    <script src="js/main.js"></script>
+    <script>
+        const dealOrderModal = document.getElementById('deal-order-modal');
+        const dealOrderForm = document.getElementById('deal-order-form');
+        const dealOrderError = document.getElementById('deal-order-error');
+        let selectedDealForOrder = null;
+        let lastOrderTrigger = null;
+
+        function getWhatsAppOrderSettings() {
+            try {
+                const stored = localStorage.getItem('karakWhatsAppOrderSettings');
+                if (stored) {
+                    const settings = JSON.parse(stored);
+                    return {
+                        countryCode: settings.countryCode || '+974',
+                        phoneNumber: settings.phoneNumber || '77821400'
+                    };
+                }
+            } catch (error) {
+                console.warn('Could not read cached WhatsApp order settings.', error);
+            }
+            return { countryCode: '+974', phoneNumber: '77821400' };
+        }
+
+        function getWhatsAppOrderNumber() {
+            const settings = getWhatsAppOrderSettings();
+            const countryCode = String(settings.countryCode || '').replace(/\D/g, '');
+            const phoneNumber = String(settings.phoneNumber || '').replace(/\D/g, '');
+            return countryCode || phoneNumber ? `${countryCode}${phoneNumber}` : '';
+        }
+
+        async function loadWhatsAppOrderSettings() {
+            try {
+                const settings = await window.KarakDB.getSetting('whatsapp_order', null);
+                if (settings) {
+                    localStorage.setItem('karakWhatsAppOrderSettings', JSON.stringify(settings));
+                }
+            } catch (error) {
+                console.warn('Could not load WhatsApp order settings; using the browser cache.', error);
+            }
+        }
+
+        function openDealOrder(deal, trigger) {
+            selectedDealForOrder = deal;
+            lastOrderTrigger = trigger;
+            document.getElementById('deal-order-name').textContent = deal.name || 'Special Deal';
+            document.getElementById('deal-order-description').textContent = deal.description || deal.desc || 'Special deal order';
+            const orderPrice = document.getElementById('deal-order-price');
+            const rawPrice = deal.amount || deal.price || 'Ask for details';
+            orderPrice.dataset.currencyAmount = /\d/.test(String(rawPrice)) ? String(rawPrice) : '';
+            orderPrice.dataset.currencyPrefix = 'Amount: ';
+            orderPrice.textContent = `Amount: ${window.KarakCurrency.formatAmount(rawPrice)}`;
+            dealOrderError.hidden = true;
+            dealOrderError.textContent = '';
+            dealOrderModal.showModal();
+            document.getElementById('deal-customer-name').focus();
+        }
+
+        document.getElementById('deal-order-close').addEventListener('click', () => dealOrderModal.close());
+        document.getElementById('deal-order-cancel').addEventListener('click', () => dealOrderModal.close());
+        dealOrderModal.addEventListener('click', event => {
+            if (event.target === dealOrderModal) {
+                dealOrderModal.close();
+            }
+        });
+        dealOrderModal.addEventListener('close', () => {
+            if (lastOrderTrigger) {
+                lastOrderTrigger.focus();
+            }
+        });
+        document.getElementById('deal-customer-phone').addEventListener('input', event => {
+            event.target.value = event.target.value.replace(/\D/g, '').slice(0, 8);
+        });
+        dealOrderForm.addEventListener('submit', event => {
+            event.preventDefault();
+            if (!selectedDealForOrder) {
+                dealOrderError.textContent = 'Please select a deal before placing your order.';
+                dealOrderError.hidden = false;
+                return;
+            }
+
+            const customerName = document.getElementById('deal-customer-name').value.trim();
+            const customerPhone = document.getElementById('deal-customer-phone').value.replace(/\D/g, '');
+            const customerAddress = document.getElementById('deal-customer-address').value.trim();
+            if (!customerName || customerPhone.length !== 8) {
+                dealOrderError.textContent = 'Enter your name and a valid 8-digit Qatar WhatsApp number.';
+                dealOrderError.hidden = false;
+                return;
+            }
+
+            const restaurantNumber = getWhatsAppOrderNumber();
+            if (!restaurantNumber) {
+                dealOrderError.textContent = 'The restaurant WhatsApp number is not configured. Please contact the restaurant.';
+                dealOrderError.hidden = false;
+                return;
+            }
+
+            const deal = selectedDealForOrder;
+            const dealName = deal.name || 'Special Deal';
+            const dealDescription = deal.description || deal.desc || '';
+            const rawDealPrice = (deal.amount || deal.price) ? String(deal.amount || deal.price) : 'Amount on request';
+            const dealPrice = window.KarakCurrency.formatAmount(rawDealPrice);
+            const orderDetails = [
+                `Special Deal: ${dealName}`,
+                dealDescription ? `Details: ${dealDescription}` : '',
+                `Amount: ${dealPrice}`
+            ].filter(Boolean).join('\n');
+            let message = `Hello, my name is ${customerName}\nWhatsApp: +974 ${customerPhone}\n`;
+            if (customerAddress) {
+                message += `Address: ${customerAddress}\n`;
+            }
+            message += `\nI would like to place this order:\n\n${orderDetails}\n\nThank you!`;
+
+            const whatsappUrl = `https://wa.me/${restaurantNumber}?text=${encodeURIComponent(message)}`;
+            const whatsappWindow = window.open(whatsappUrl, '_blank');
+            if (!whatsappWindow) {
+                window.location.href = whatsappUrl;
+            }
+
+            if (window.KarakDB && typeof window.KarakDB.createOrder === 'function') {
+                const order = {
+                    id: Date.now().toString(36) + Math.random().toString(36).slice(2, 8),
+                    source: 'special-deal',
+                    customerCountryCode: '+974',
+                    customerPhoneNumber: customerPhone,
+                    customerName,
+                    orderDetails,
+                    total: dealPrice,
+                    status: 'pending',
+                    items: [{
+                        id: deal.id || dealName,
+                        name: dealName,
+                        quantity: 1,
+                        price: dealPrice,
+                        subtotal: dealPrice
+                    }]
+                };
+                window.KarakDB.createOrder(order).catch(error => {
+                    console.error('WhatsApp opened, but the special-deal order could not be saved.', error);
+                });
+            }
+
+            dealOrderModal.close();
+        });
+
+        loadWhatsAppOrderSettings();
+
+        (async function loadSpecialDeals() {
+            const list = document.getElementById('special-deal-list');
+            try {
+                const deals = await window.KarakDB.getSpecialFoods();
+                const availableDeals = deals.filter(deal => (deal.status || 'available').toLowerCase() === 'available');
+                if (!availableDeals.length) {
+                    list.innerHTML = '<p class="deal-empty">There are no special deals available right now. Please check back soon.</p>';
+                    return;
+                }
+                list.replaceChildren();
+                availableDeals.forEach((deal, index) => {
+                    const card = document.createElement('article');
+                    card.className = 'deal-card';
+                    card.id = `deal-${index + 1}`;
+                    const image = document.createElement('img');
+                    image.src = (deal.image || deal.imageData || 'menu/page-thumbs/page2_Im0.jpg').replace(/^\.\.\/menu\//, 'menu/');
+                    image.alt = deal.name || 'Special deal';
+                    image.onerror = () => {
+                        image.onerror = null;
+                        image.src = 'menu/page-thumbs/page2_Im0.jpg';
+                    };
+                    const content = document.createElement('div');
+                    content.className = 'deal-card-content';
+                    const title = document.createElement('h2');
+                    title.textContent = deal.name || 'Special Deal';
+                    content.appendChild(title);
+                    if (deal.arabicName) {
+                        const arabic = document.createElement('p');
+                        arabic.className = 'arabic-name';
+                        arabic.lang = 'ar';
+                        arabic.dir = 'rtl';
+                        arabic.textContent = deal.arabicName;
+                        content.appendChild(arabic);
+                    }
+                    const description = document.createElement('p');
+                    description.className = 'description';
+                    description.textContent = deal.description || deal.desc || 'Ask us for more details about this deal.';
+                    content.appendChild(description);
+                    const dealAmount = deal.amount || deal.price;
+                    if (dealAmount) {
+                        const amount = document.createElement('span');
+                        amount.className = 'deal-price';
+                        amount.dataset.currencyAmount = String(dealAmount);
+                        amount.textContent = window.KarakCurrency.formatAmount(dealAmount);
+                        content.appendChild(amount);
+                    }
+                    const actions = document.createElement('div');
+                    actions.className = 'deal-actions';
+                    const orderButton = document.createElement('button');
+                    orderButton.className = 'deal-action deal-order-action';
+                    orderButton.type = 'button';
+                    orderButton.innerHTML = '<i class="fas fa-shopping-bag" aria-hidden="true"></i><span>Buy Now</span>';
+                    orderButton.addEventListener('click', () => openDealOrder(deal, orderButton));
+                    const shareButton = document.createElement('button');
+                    shareButton.className = 'deal-action';
+                    shareButton.type = 'button';
+                    shareButton.setAttribute('aria-label', `Share ${deal.name || 'Special Deal'}`);
+                    shareButton.innerHTML = '<i class="fas fa-share-alt" aria-hidden="true"></i><span>Share</span>';
+                    shareButton.addEventListener('click', async () => {
+                        const dealUrl = new URL(window.location.href);
+                        dealUrl.hash = card.id;
+                        const shareData = {
+                            title: deal.name || 'Karak Station Special Deal',
+                            text: deal.description || deal.desc || 'Check out this special deal from Karak Station.',
+                            url: dealUrl.href
+                        };
+                        try {
+                            if (navigator.share) {
+                                await navigator.share(shareData);
+                            } else if (navigator.clipboard && window.isSecureContext) {
+                                await navigator.clipboard.writeText(`${shareData.title} - ${shareData.text} ${shareData.url}`);
+                                alert('Deal link copied to clipboard.');
+                            } else {
+                                window.prompt('Copy this deal link to share:', shareData.url);
+                            }
+                        } catch (error) {
+                            if (error.name !== 'AbortError') {
+                                console.error('Could not share this deal:', error);
+                                alert('This deal could not be shared. Please try again.');
+                            }
+                        }
+                    });
+                    actions.append(orderButton, shareButton);
+                    content.appendChild(actions);
+                    card.append(image, content);
+                    list.appendChild(card);
+                });
+            } catch (error) {
+                console.error('Could not load special deals from Supabase:', error);
+                list.innerHTML = '<p class="deal-error">Special deals could not be loaded. Please try again later.</p>';
+            }
+        })();
+    </script>
+</body>
+</html>

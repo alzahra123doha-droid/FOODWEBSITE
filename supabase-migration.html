@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Karak Station - Supabase Migration</title>
+    <script src="js/supabase-config.js"></script>
+    <script src="js/supabase-client.js"></script>
+    <script src="js/karak-data.js"></script>
+    <style>
+        body { max-width: 850px; margin: 50px auto; padding: 20px; font-family: Arial, sans-serif; }
+        .card { margin: 16px 0; padding: 24px; border: 1px solid #ddd; border-radius: 12px; }
+        button { padding: 12px 18px; border: 0; border-radius: 8px; cursor: pointer; }
+        #status { white-space: pre-wrap; }
+    </style>
+</head>
+<body>
+    <h1>Karak Station data migration</h1>
+    <div class="card">
+        <p>Run <code>supabase/schema.sql</code> in Supabase first, then sign in as an admin on this browser and use this tool to migrate its locally saved data.</p>
+        <p>Migration covers menu, deals, blog content and engagement, shop/payment/WhatsApp settings, and orders. WhatsApp access tokens are intentionally not copied.</p>
+        <button id="migrate" type="button">Migrate this browser's data</button>
+    </div>
+    <div id="status" class="card" role="status">Waiting to migrate.</div>
+    <script>
+        const status = document.getElementById('status');
+        const legacyKeys = [
+            'adminMenu', 'adminCategories', 'adminFoods',
+            'specialPosterFoods', 'blogCategories', 'blogPosts',
+            'karakShopDetails', 'karakPaymentDetails',
+            'karakWhatsAppOrderSettings', 'karakWhatsAppBookingSettings',
+            'karakSubmittedOrders', 'karakSubmittedOrdersMobile',
+            'karakSubmittedOrdersDesktop', 'submittedOrders',
+            'karakBlogEngagement'
+        ];
+
+        function readJson(key, fallback) {
+            const stored = localStorage.getItem(key);
+            return stored === null ? fallback : JSON.parse(stored);
+        }
+
+        function makeMigrationVisitorId(seed, index) {
+            const hex = seed.replace(/-/g, '');
+            const suffix = (BigInt(`0x${hex.slice(-12)}`) + BigInt(index))
+                .toString(16).padStart(12, '0').slice(-12);
+            const value = `${hex.slice(0, 20)}${suffix}`;
+            return `${value.slice(0, 8)}-${value.slice(8, 12)}-${value.slice(12, 16)}-${value.slice(16, 20)}-${value.slice(20)}`;
+        }
+
+        async function requireAdmin() {
+            if (!window.karakSupabase) throw new Error('Supabase client is not configured.');
+            const { data: sessionData, error: sessionError } = await window.karakSupabase.auth.getSession();
+            if (sessionError) throw sessionError;
+            const user = sessionData.session && sessionData.session.user;
+            if (!user) throw new Error('Sign in to the admin page first, then return here.');
+            const { data: profile, error } = await window.karakSupabase
+                .from('admin_profiles')
+                .select('id,active')
+                .eq('id', user.id)
+                .maybeSingle();
+            if (error) throw error;
+            if (!profile || !profile.active) throw new Error('This Supabase account is not registered as an active admin.');
+        }
+
+        async function migrateMenu(migrated) {
+            const current = await window.KarakDB.getMenu();
+            if (current.legacy) {
+                await window.KarakDB.saveMenu(current.categories, current.foods);
+                migrated.push('legacy Supabase menu');
+                return;
+            }
+            if (current.categories.length || current.foods.length) return;
+            const storedMenu = readJson('adminMenu', null);
+            const categories = storedMenu && Array.isArray(storedMenu.categories)
+                ? storedMenu.categories : readJson('adminCategories', []);
+            const foods = storedMenu && Array.isArray(storedMenu.foods)
+                ? storedMenu.foods : readJson('adminFoods', []);
+            if (categories.length || foods.length) {
+                await window.KarakDB.saveMenu(categories, foods);
+                migrated.push('menu and categories');
+            }
+        }
+
+        async function migrateSpecialFoods(migrated) {
+            const current = await window.KarakDB.getSpecialFoods();
+            const stored = readJson('specialPosterFoods', []);
+            if (!current.length && stored.length) {
+                await window.KarakDB.saveSpecialFoods(stored);
+                migrated.push('special deals');
+            }
+        }
+
+        async function migrateBlog(migrated) {
+            const current = await window.KarakDB.getBlog();
+            const categories = readJson('blogCategories', []);
+            const posts = readJson('blogPosts', []);
+            if (!current.categories.length && !current.posts.length && (categories.length || posts.length)) {
+                await window.KarakDB.saveBlog(categories, posts);
+                migrated.push('blog content');
+            }
+        }
+
+        async function migrateSettings(migrated) {
+            const settings = [
+                ['karakShopDetails', 'shop_details'],
+                ['karakPaymentDetails', 'payment_details'],
+                ['karakWhatsAppOrderSettings', 'whatsapp_order'],
+                ['karakWhatsAppBookingSettings', 'whatsapp_booking']
+            ];
+            for (const [localKey, databaseKey] of settings) {
+                const value = readJson(localKey, null);
+                if (!value || await window.KarakDB.getSetting(databaseKey, null)) continue;
+                await window.KarakDB.saveSetting(databaseKey, value);
+                migrated.push(databaseKey.replaceAll('_', ' '));
+            }
+        }
+
+        async function migrateOrders(migrated) {
+            const allOrders = legacyKeys.slice(10, 14).flatMap(key => {
+                const value = readJson(key, []);
+                return Array.isArray(value) ? value : [];
+            });
+            const uniqueOrders = new Map();
+            allOrders.forEach((order, index) => {
+                const id = String(order && order.id || `legacy-order-${index}`);
+                if (!uniqueOrders.has(id)) uniqueOrders.set(id, order);
+            });
+            const rows = Array.from(uniqueOrders, ([id, order]) => ({
+                legacy_id: id,
+                customer_name: order.customerName || order.customer || order.customerFullName || '',
+                customer_country_code: order.customerCountryCode || '+974',
+                customer_phone_number: order.customerPhoneNumber || order.customerPhone || '',
+                order_type: order.orderType || 'whatsapp',
+                items: Array.isArray(order.items) ? order.items : Array.isArray(order.foods) ? order.foods : [],
+                total: String(order.total || ''),
+                message: order.message || order.orderDetails || '',
+                status: order.status || 'pending',
+                source: order.source || 'website',
+                special_poster: Boolean(order.specialPoster || order.source === 'special-poster'),
+                device: order.device || '',
+                delivered_at: order.deliveredAt || null,
+                created_at: order.createdAt || new Date().toISOString()
+            }));
+            if (!rows.length) return;
+            const { error } = await window.karakSupabase.from('orders')
+                .upsert(rows, { onConflict: 'legacy_id', ignoreDuplicates: true });
+            if (error) throw error;
+            migrated.push(`${rows.length} order(s)`);
+        }
+
+        async function migrateBlogEngagement(migrated) {
+            const engagement = readJson('karakBlogEngagement', {});
+            const posts = await window.KarakDB.getBlog();
+            const postIds = new Set(posts.posts.map(post => String(post.id)));
+            const seedKey = 'karakBlogMigrationSeed';
+            let seed = localStorage.getItem(seedKey);
+            if (!seed) {
+                seed = crypto.randomUUID();
+                localStorage.setItem(seedKey, seed);
+            }
+
+            let likes = 0;
+            let comments = 0;
+            for (const [postId, item] of Object.entries(engagement)) {
+                if (!postIds.has(postId)) continue;
+                const likeCount = Math.max(0, Math.floor(Number(item && item.likes) || 0));
+                for (let start = 0; start < likeCount; start += 500) {
+                    const batch = Array.from({ length: Math.min(500, likeCount - start) }, (_, offset) => ({
+                        post_legacy_id: postId,
+                        visitor_id: makeMigrationVisitorId(seed, start + offset)
+                    }));
+                    const result = await window.karakSupabase.from('blog_likes')
+                        .upsert(batch, { onConflict: 'post_legacy_id,visitor_id', ignoreDuplicates: true });
+                    if (result.error) throw result.error;
+                }
+                likes += likeCount;
+
+                const commentList = Array.isArray(item && item.comments) ? item.comments : [];
+                for (let start = 0; start < commentList.length; start += 500) {
+                    const batch = commentList.slice(start, start + 500).map((comment, offset) => ({
+                        legacy_id: `migration-${seed}-${postId}-${start + offset}`,
+                        post_legacy_id: postId,
+                        commenter_name: String(comment.name || 'Visitor').trim().slice(0, 100) || 'Visitor',
+                        comment_text: String(comment.text || '').trim().slice(0, 2000),
+                        status: 'published',
+                        created_at: comment.date || new Date().toISOString()
+                    })).filter(comment => comment.comment_text);
+                    if (!batch.length) continue;
+                    const result = await window.karakSupabase.from('blog_comments')
+                        .upsert(batch, { onConflict: 'legacy_id', ignoreDuplicates: true });
+                    if (result.error) throw result.error;
+                    comments += batch.length;
+                }
+            }
+            if (likes || comments) migrated.push(`${likes} blog like(s), ${comments} comment(s)`);
+        }
+
+        document.getElementById('migrate').addEventListener('click', async event => {
+            const button = event.currentTarget;
+            button.disabled = true;
+            status.textContent = 'Checking admin access and migrating data…';
+            try {
+                await requireAdmin();
+                const migrated = [];
+                await migrateMenu(migrated);
+                await migrateSpecialFoods(migrated);
+                await migrateBlog(migrated);
+                await migrateSettings(migrated);
+                await migrateOrders(migrated);
+                await migrateBlogEngagement(migrated);
+                status.textContent = migrated.length
+                    ? `Migration complete:\n- ${migrated.join('\n- ')}`
+                    : 'No new local data needed migration.';
+            } catch (error) {
+                console.error('Supabase data migration failed:', error);
+                status.textContent = `Migration failed: ${error.message || error}`;
+            } finally {
+                button.disabled = false;
+            }
+        });
+    </script>
+</body>
+</html>

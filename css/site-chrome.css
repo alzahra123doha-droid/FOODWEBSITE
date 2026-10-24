@@ -1,0 +1,738 @@
+.ks-site-header {
+    position: relative;
+    z-index: 30;
+    width: 100%;
+    background: #080807;
+}
+
+.ks-header-inner {
+    position: relative;
+    z-index: 30;
+    min-height: 88px;
+    background: #080807;
+}
+
+.ks-header-container {
+    display: flex;
+    width: min(100% - 48px, 1180px);
+    min-height: 88px;
+    align-items: center;
+    justify-content: space-between;
+    gap: 28px;
+    margin: 0 auto;
+}
+
+.ks-header-brand {
+    display: inline-flex;
+    flex: 0 0 auto;
+    align-items: center;
+    gap: 10px;
+    color: #f2eee8 !important;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 30px;
+    font-weight: 600;
+    line-height: 1;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+.ks-header-brand i {
+    font-size: 21px;
+}
+
+.ks-header-logo {
+    display: block;
+    width: 56px;
+    height: 56px;
+    flex: 0 0 auto;
+    border-radius: 50%;
+    object-fit: contain;
+}
+
+.ks-header-logo[hidden],
+.ks-footer-logo[hidden] {
+    display: none;
+}
+
+.ks-desktop-nav {
+    margin-left: auto;
+}
+
+.ks-desktop-nav > ul {
+    display: flex;
+    align-items: center;
+    gap: clamp(14px, 1.6vw, 25px);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.ks-desktop-nav > ul > li {
+    position: relative;
+    margin: 0;
+}
+
+.ks-desktop-nav > ul > li > a {
+    display: block;
+    padding: 27px 0;
+    color: rgba(255, 255, 255, .85) !important;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.4;
+    text-decoration: none;
+}
+
+.ks-desktop-nav > ul > li > a:hover,
+.ks-desktop-nav > ul > li > a:focus,
+.ks-desktop-nav > ul > li > a[aria-current="page"] {
+    color: #fff !important;
+}
+
+.ks-desktop-nav .ks-pages-menu > a i {
+    margin-left: 5px;
+    font-size: 11px;
+}
+
+.ks-desktop-nav .ks-submenu {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    display: none;
+    min-width: 185px;
+    margin: 0;
+    padding: 7px 0;
+    border: 1px solid rgba(255, 255, 255, .09);
+    border-radius: 3px;
+    background: #11100f;
+    box-shadow: 0 12px 25px rgba(0, 0, 0, .28);
+    list-style: none;
+    transform: translateX(-50%);
+}
+
+.ks-desktop-nav .ks-pages-menu:hover .ks-submenu,
+.ks-desktop-nav .ks-pages-menu:focus-within .ks-submenu {
+    display: block;
+}
+
+.ks-desktop-nav .ks-submenu a {
+    display: block;
+    padding: 9px 14px;
+    color: rgba(255, 255, 255, .82) !important;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 14px;
+    text-decoration: none;
+}
+
+.ks-desktop-nav .ks-submenu a:hover,
+.ks-desktop-nav .ks-submenu a:focus {
+    color: #f28b16 !important;
+}
+
+.ks-theme-toggle {
+    display: inline-flex;
+    width: 42px;
+    height: 42px;
+    flex: 0 0 auto;
+    align-items: center;
+    justify-content: center;
+    margin-left: 18px;
+    padding: 0;
+    border: 1px solid rgba(214, 181, 129, .58);
+    border-radius: 50%;
+    background: rgba(255, 255, 255, .05);
+    color: #f3d6a5;
+    font-size: 17px;
+    cursor: pointer;
+    transition: background-color .2s ease, color .2s ease, transform .2s ease;
+}
+
+.ks-theme-toggle:hover,
+.ks-theme-toggle:focus-visible {
+    background: rgba(214, 181, 129, .17);
+    color: #fff;
+    transform: rotate(-10deg);
+}
+
+.ks-theme-toggle:focus-visible {
+    outline: 2px solid #f3d6a5;
+    outline-offset: 3px;
+}
+
+.ks-header-mobile {
+    display: none;
+    position: relative;
+    top: auto;
+    right: auto;
+    width: auto;
+}
+
+.ks-header-mobile .slicknav_menu {
+    position: static;
+    padding: 0;
+    background: transparent;
+}
+
+.ks-header-mobile .slicknav_btn {
+    position: relative;
+    top: auto;
+    margin: 0;
+    padding: 11px 12px;
+    border: 0;
+    background: transparent;
+    box-shadow: none;
+}
+
+.ks-header-mobile .slicknav_nav {
+    position: absolute;
+    top: calc(100% + 3px);
+    right: 0;
+    z-index: 50;
+    width: min(280px, calc(100vw - 32px));
+    padding: 8px 16px;
+    border: 1px solid rgba(255, 255, 255, .09);
+    border-radius: 3px;
+    background: #11100f;
+    box-shadow: 0 12px 25px rgba(0, 0, 0, .28);
+}
+
+.ks-header-mobile .slicknav_nav a {
+    padding: 11px 8px;
+    color: #f6f2eb;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 16px;
+    text-decoration: none;
+    text-transform: none;
+}
+
+.ks-header-mobile .slicknav_nav a:hover,
+.ks-header-mobile .slicknav_nav a:focus {
+    border-radius: 2px;
+    background: #282522;
+    color: #f28b16;
+}
+
+.ks-header-mobile .slicknav_nav .slicknav_arrow {
+    color: #f28b16;
+}
+
+.ks-site-footer {
+    padding: 9px 10px 0;
+    background: #11100f;
+}
+
+.ks-site-footer .ks-footer-panel {
+    max-width: 1160px;
+    margin: 0 auto;
+    padding: 34px 34px 13px;
+    border-radius: 3px 3px 0 0;
+    background: #11100f;
+}
+
+.ks-footer-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 28px;
+}
+
+.ks-footer-brand {
+    display: inline-flex;
+    align-items: center;
+    color: #f6f4f1 !important;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 44px;
+    font-weight: 800;
+    letter-spacing: -.06em;
+    line-height: 1;
+    text-decoration: none;
+}
+
+.ks-footer-brand strong {
+    color: #f28b16;
+    font-weight: 800;
+}
+
+.ks-footer-logo {
+    display: block;
+    width: 78px;
+    height: 78px;
+    flex: 0 0 auto;
+    margin-right: 12px;
+    border-radius: 50%;
+    object-fit: contain;
+}
+
+.ks-footer-brand .ks-footer-shop-name {
+    color: #f6f4f1;
+    font-size: 40px;
+    letter-spacing: -.03em;
+}
+
+.ks-footer-newsletter {
+    width: min(100%, 280px);
+    margin: 0;
+}
+
+.ks-footer-newsletter label {
+    display: block;
+    margin-bottom: 7px;
+    color: rgba(255, 255, 255, .8);
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 14px;
+}
+
+.ks-footer-email-field {
+    display: flex;
+    height: 42px;
+    padding: 3px;
+    border-radius: 4px;
+    background: #fff;
+}
+
+.ks-footer-email-field input {
+    width: 100%;
+    min-width: 0;
+    padding: 0 8px;
+    border: 0;
+    outline: 0;
+    background: transparent;
+    color: #292725;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 15px;
+}
+
+.ks-footer-email-field input::placeholder {
+    color: #777;
+}
+
+.ks-footer-email-field button {
+    display: inline-flex;
+    width: 32px;
+    min-width: 32px;
+    align-items: center;
+    justify-content: center;
+    border: 0;
+    border-radius: 3px;
+    background: #191919;
+    color: #fff;
+    cursor: pointer;
+}
+
+.ks-footer-divider {
+    height: 1px;
+    margin: 20px 0 19px;
+    background: rgba(255, 255, 255, .16);
+}
+
+.ks-footer-links {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(100px, 1fr)) auto;
+    align-items: start;
+    gap: 28px;
+    min-height: 105px;
+}
+
+.ks-footer-group h2 {
+    margin: 0 0 8px;
+    color: #f7f4ef;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.ks-footer-group ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.ks-footer-group li,
+.ks-footer-group a,
+.ks-footer-group li span {
+    color: rgba(255, 255, 255, .72) !important;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 14px;
+    line-height: 1.7;
+}
+
+.ks-footer-group a {
+    text-decoration: none;
+}
+
+.ks-footer-group a:hover,
+.ks-footer-group a:focus {
+    color: #f28b16 !important;
+}
+
+.ks-footer-social {
+    display: flex;
+    align-items: center;
+    gap: 17px;
+    padding-top: 18px;
+}
+
+.ks-footer-social a {
+    color: #f5f2ed !important;
+    font-size: 18px;
+}
+
+.ks-footer-social a:hover,
+.ks-footer-social a:focus {
+    color: #f28b16 !important;
+}
+
+.ks-footer-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding-top: 12px;
+    border-top: 1px solid rgba(255, 255, 255, .1);
+}
+
+.ks-footer-bottom p,
+.ks-footer-bottom a {
+    margin: 0;
+    color: rgba(255, 255, 255, .58) !important;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+.ks-footer-bottom a {
+    text-decoration: none;
+}
+
+.ks-opening-hours {
+    white-space: pre-line;
+}
+
+@media (max-width: 991px) {
+    .ks-header-inner,
+    .ks-header-container {
+        min-height: 82px;
+    }
+
+    .ks-header-container {
+        width: min(100% - 34px, 720px);
+    }
+
+    .ks-desktop-nav {
+        display: none;
+    }
+
+    .ks-header-mobile {
+        display: block;
+        margin-left: 0;
+    }
+
+    .ks-theme-toggle {
+        margin-left: auto;
+    }
+}
+
+@media (max-width: 767px) {
+    .ks-header-inner,
+    .ks-header-container {
+        min-height: 82px;
+    }
+
+    .ks-header-container {
+        width: calc(100% - 34px);
+        gap: 10px;
+    }
+
+    .ks-header-brand {
+        gap: 9px;
+        font-size: 27px;
+    }
+
+    .ks-header-brand i {
+        font-size: 22px;
+    }
+
+    .ks-header-logo {
+        width: 46px;
+        height: 46px;
+    }
+
+    .ks-footer-brand .ks-footer-shop-name {
+        font-size: 34px;
+    }
+
+    .ks-footer-logo {
+        width: 64px;
+        height: 64px;
+    }
+
+    .ks-theme-toggle {
+        width: 40px;
+        height: 40px;
+        margin-left: auto;
+    }
+
+    .ks-header-mobile {
+        margin-left: 0;
+    }
+
+    .ks-site-footer {
+        padding-right: 6px;
+        padding-left: 6px;
+    }
+
+    .ks-site-footer .ks-footer-panel {
+        padding: 29px 24px 13px;
+    }
+
+    .ks-footer-top {
+        align-items: stretch;
+        flex-direction: column;
+        gap: 22px;
+    }
+
+    .ks-footer-brand {
+        font-size: 40px;
+    }
+
+    .ks-footer-newsletter {
+        width: 100%;
+        max-width: 360px;
+    }
+
+    .ks-footer-links {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 23px 18px;
+        padding-bottom: 20px;
+    }
+
+    .ks-footer-social {
+        grid-column: 1 / -1;
+        padding-top: 0;
+    }
+
+    .ks-footer-bottom {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 5px;
+    }
+}
+
+@media (max-width: 420px) {
+    .ks-header-brand {
+        font-size: 24px;
+    }
+
+    .ks-header-logo {
+        width: 42px;
+        height: 42px;
+    }
+
+    .ks-header-container {
+        width: calc(100% - 24px);
+    }
+
+    .ks-theme-toggle {
+        width: 38px;
+        height: 38px;
+    }
+
+    .ks-site-footer .ks-footer-panel {
+        padding-right: 17px;
+        padding-left: 17px;
+    }
+}
+
+html {
+    color-scheme: light;
+}
+
+body[data-theme="night"] {
+    color-scheme: dark;
+    background: #191817;
+    color: #eee9e1;
+}
+
+body[data-theme="night"] main {
+    background-color: #191817;
+    color: #eee9e1;
+}
+
+body[data-theme="night"] main .section-bg,
+    body[data-theme="night"] main > .slider-area,
+    body[data-theme="night"] main > .blog_area,
+    body[data-theme="night"] main > .contact-section,
+    body[data-theme="night"] main > .about-area2,
+    body[data-theme="night"] main > .about-low-area,
+    body[data-theme="night"] main > .about-area3,
+    body[data-theme="night"] main > .our-services,
+    body[data-theme="night"] main > .booking-area,
+    body[data-theme="night"] main > .gallery-area {
+    background-color: #22201d !important;
+    background-blend-mode: multiply;
+}
+
+body[data-theme="night"] main h1,
+    body[data-theme="night"] main h2,
+    body[data-theme="night"] main h3,
+    body[data-theme="night"] main h4,
+    body[data-theme="night"] main h5,
+    body[data-theme="night"] main .hero-cap h2,
+    body[data-theme="night"] main .blog-head,
+    body[data-theme="night"] main .widget_title {
+    color: #f3eee6 !important;
+}
+
+body[data-theme="night"] main p,
+    body[data-theme="night"] main li,
+    body[data-theme="night"] main label,
+    body[data-theme="night"] main .about-caption,
+    body[data-theme="night"] main .contact-info .media-body p {
+    color: #d0cbc3;
+}
+
+body[data-theme="night"] main input,
+    body[data-theme="night"] main textarea,
+    body[data-theme="night"] main select {
+        border-color: #514c45;
+        background-color: #2d2a26;
+    color: #f3eee6;
+}
+
+body[data-theme="night"] main input::placeholder,
+    body[data-theme="night"] main textarea::placeholder {
+    color: #b9b2a8;
+}
+
+body[data-theme="night"] main .blog_item,
+    body[data-theme="night"] main .blog_details,
+    body[data-theme="night"] main .blog_right_sidebar,
+    body[data-theme="night"] main .single_sidebar_widget,
+    body[data-theme="night"] main .single-caption,
+    body[data-theme="night"] main .single-services,
+    body[data-theme="night"] main .contact-info {
+        background-color: #2b2926;
+    color: #eee9e1;
+}
+
+body[data-theme="night"] main .menu-tabs .nav-link:not(.active),
+    body[data-theme="night"] main .mobile-category-select,
+    body[data-theme="night"] main .menu-item-card,
+    body[data-theme="night"] main .selected-items-section,
+    body[data-theme="night"] main .selected-item,
+    body[data-theme="night"] main .size-modal-content,
+    body[data-theme="night"] main .deal-card,
+    body[data-theme="night"] main .deal-order-summary {
+        border-color: #514b42;
+        background-color: #2b2926;
+    color: #eee9e1;
+}
+
+body[data-theme="night"] .deal-order-modal,
+    body[data-theme="night"] .deal-order-summary {
+        border-color: #514b42;
+        background-color: #2b2926;
+    color: #eee9e1;
+}
+
+body[data-theme="night"] main .menu-item-card-body .arabic-name,
+    body[data-theme="night"] main .menu-item-card-body p,
+    body[data-theme="night"] main .menu-item-card-body h4,
+    body[data-theme="night"] main .selected-item-name,
+    body[data-theme="night"] main .total-section,
+    body[data-theme="night"] main .customer-info-section label,
+    body[data-theme="night"] main .deal-card h2,
+    body[data-theme="night"] main .deal-card .description,
+    body[data-theme="night"] main .deal-order-field {
+    color: #eee9e1 !important;
+}
+
+body[data-theme="night"] main .qatar-phone-field {
+    border-color: #514c45;
+    background: #2d2a26;
+}
+
+body[data-theme="night"] main .qatar-phone-prefix,
+    body[data-theme="night"] main .selected-item {
+        background-color: #37332e;
+    color: #eee9e1;
+}
+
+body[data-theme="night"] main .deal-action:not(.deal-order-action),
+    body[data-theme="night"] main .customer-info-input {
+        border-color: #514c45;
+        background-color: #242220;
+    color: #f3eee6;
+}
+
+body[data-theme="night"] .deal-order-field input,
+    body[data-theme="night"] .deal-order-field textarea {
+        border-color: #514c45;
+        background-color: #242220;
+    color: #f3eee6;
+}
+
+body.home-page[data-theme="night"] .ks-welcome,
+    body.home-page[data-theme="night"] .ks-popular,
+    body.home-page[data-theme="night"] .ks-daily-menu,
+    body.home-page[data-theme="night"] .ks-special {
+        background-color: #22201d;
+    color: #eee9e1;
+}
+
+body.home-page[data-theme="night"] .ks-home {
+    background-color: #22201d;
+}
+
+body.home-page[data-theme="night"] .ks-benefits {
+    border-color: rgba(255, 255, 255, .1);
+    background: #2b2926;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, .24);
+}
+
+body.home-page[data-theme="night"] .ks-benefit h2 {
+    color: #f3eee6;
+}
+
+body.home-page[data-theme="night"] .ks-benefit p {
+    color: #d0cbc3 !important;
+}
+
+body.home-page[data-theme="night"] .ks-hero::after {
+    background: #22201d;
+}
+
+body.home-page[data-theme="night"] .ks-welcome h2,
+    body.home-page[data-theme="night"] .ks-daily-copy h2,
+    body.home-page[data-theme="night"] .ks-section-heading h2,
+    body.home-page[data-theme="night"] .ks-special-copy h2,
+    body.home-page[data-theme="night"] .ks-menu-card-copy h3 {
+    color: #f3eee6;
+}
+
+body.home-page[data-theme="night"] .ks-copy,
+    body.home-page[data-theme="night"] .ks-menu-card-copy p {
+    color: #d0cbc3 !important;
+}
+
+body.home-page[data-theme="night"] .ks-menu-card {
+    border-color: rgba(255, 255, 255, .12);
+    background: #2b2926;
+}
+
+body.home-page[data-theme="night"] .ks-menu-list {
+    border-color: rgba(255, 255, 255, .18);
+}
+
+body.home-page[data-theme="night"] .ks-menu-list li {
+    border-color: rgba(255, 255, 255, .14);
+    color: #eee9e1;
+}
+
+body.home-page[data-theme="night"] .ks-special-menu-link {
+    color: #eee9e1;
+}
+
+body[data-theme="night"] #back-top {
+    background: #c17825;
+}
